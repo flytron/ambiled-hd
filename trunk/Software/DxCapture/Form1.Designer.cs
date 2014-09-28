@@ -1,4 +1,4 @@
-﻿namespace DxCapture
+﻿namespace AmbiLED
 {
     partial class Form1
     {
@@ -11,7 +11,7 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+       /* protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
@@ -19,7 +19,7 @@
             }
             base.Dispose(disposing);
         }
-
+        */
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -49,6 +49,8 @@
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.button3 = new System.Windows.Forms.Button();
+            this.processList = new System.Windows.Forms.ListBox();
             this.button2 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.RunOnStartup = new System.Windows.Forms.CheckBox();
@@ -86,6 +88,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.ScreenPanel = new System.Windows.Forms.Panel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button4 = new System.Windows.Forms.Button();
             this.MyContextMenuStrip.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -253,6 +256,9 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.button4);
+            this.tabPage4.Controls.Add(this.button3);
+            this.tabPage4.Controls.Add(this.processList);
             this.tabPage4.Controls.Add(this.button2);
             this.tabPage4.Controls.Add(this.checkBox1);
             this.tabPage4.Controls.Add(this.RunOnStartup);
@@ -264,6 +270,24 @@
             this.tabPage4.Text = "Main Settings";
             this.tabPage4.UseVisualStyleBackColor = true;
             this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(209, 212);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // processList
+            // 
+            this.processList.FormattingEnabled = true;
+            this.processList.Location = new System.Drawing.Point(356, 108);
+            this.processList.Name = "processList";
+            this.processList.Size = new System.Drawing.Size(271, 251);
+            this.processList.TabIndex = 3;
             // 
             // button2
             // 
@@ -674,6 +698,16 @@
             this.tabPage3.Text = "About";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(209, 268);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 5;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -782,6 +816,9 @@
         private System.Windows.Forms.ToolStripMenuItem pseudoFullScreenToolStripMenuItem;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.ListBox processList;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
 
     }
 }
