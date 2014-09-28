@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -11,15 +12,14 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Collections.ObjectModel;
 using System.IO.Ports;
-using KMPP;
-using SlimDX.Direct3D9;
-using SlimDX;
 using Ini;
 using Microsoft.Win32;
+using AmbiLED.WindowsApi;
+using AmbiLED_HD;
 
 
 
-namespace DxCapture
+namespace AmbiLED
 {
     public partial class Form1 : Form
     {
@@ -44,11 +44,12 @@ namespace DxCapture
         // END - MONITOR SLEEP DETECTION
 
 
-    
+        ///     list of useless processes
+        private readonly string[] processBlacklist = { "explorer", "AmbiLED", "IW4 Console", "XSplit" };
+        ///     list of currently running processes
+        private List<string> processCache = new List<string>();
 
-        //PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", Process.GetCurrentProcess().ProcessName);
 
-        //PerformanceCounter ramCounter = new PerformanceCounter("Memory", "Available MBytes");
 
         public struct RECT
         {
@@ -58,40 +59,10 @@ namespace DxCapture
             public int bottom;
         }
 
-
-        /*
-        #region Constants
-        //Finds a window by class name
-        [DllImport("USER32.DLL")]
-        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-        //Sets a window to be a child window of another window
-        [DllImport("USER32.DLL")]
-        public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
-
-        //Sets window attributes
-        [DllImport("USER32.DLL")]
-        public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-        //Gets window attributes
-        [DllImport("USER32.DLL")]
-        public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-
-        [DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true)]
-        static extern IntPtr FindWindowByCaption(IntPtr ZeroOnly, string lpWindowName);
-
-        [DllImport("user32.dll")]
-        static extern IntPtr GetMenu(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        static extern int GetMenuItemCount(IntPtr hMenu);
-
-        [DllImport("user32.dll")]
-        static extern bool DrawMenuBar(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        static extern bool RemoveMenu(IntPtr hMenu, uint uPosition, uint uFlags);
-        */
+        struct LEDPoint
+        {
+            public int x, y;
+        }
 
         //Gets window rect
         [DllImport("user32.dll", SetLastError = true)]
@@ -109,32 +80,7 @@ namespace DxCapture
         [DllImport("USER32.DLL")]
         public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
 
-        /*
-        //SetWindowPos
-        [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
-        public static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
-
-
-        #endregion
-
-        //assorted constants needed
-        public static uint MF_BYPOSITION = 0x400;
-        public static uint MF_REMOVE = 0x1000;
-        public static int GWL_STYLE = -16;
-        public static int WS_CHILD = 0x40000000; //child window
-        public static int WS_BORDER = 0x00800000; //window with border
-        public static int WS_DLGFRAME = 0x00400000; //window with double border but no title
-        public static int WS_CAPTION = WS_BORDER | WS_DLGFRAME; //window with a title bar 
-        public static int WS_SYSMENU = 0x00080000; //window menu  
-        public static int SWP_NOMOVE = 0x2;
-        public static int SWP_NOSIZE = 1;
-        public static int SWP_NOZORDER = 0x4;
-        public static int SWP_SHOWWINDOW = 0x0040;
-        public static int SWP_FRAMECHANGED = 0x0020;
-        public static int SWP_NOOWNERZORDER = 0x0200;
-
-        */
-
+        
         public static int GWL_STYLE = -16;
         public static int WS_CHILD = 0x40000000; //child window
         public static int WS_BORDER = 0x00800000; //window with border
@@ -162,6 +108,9 @@ namespace DxCapture
         int FRAME_LED_GAP = 0;
         int TOTAL_LED_COUNT = 40;
 
+            
+
+
         /*
         byte[] RedRamp = new byte[256];
         byte[] GreenRamp = new byte[256];
@@ -184,11 +133,11 @@ namespace DxCapture
 191,193,194,196,198,200,202,204,206,208,210,212,214,216,218,220,
 222,224,227,229,231,233,235,237,239,241,244,246,248,250,252,255};
         */
-        DxScreenCapture sc = new DxScreenCapture();
+        //DxScreenCapture sc = new DxScreenCapture();
 
 
-        Collection<long> stripPos = new Collection<long>();
-        Collection<Color> stripColor = new Collection<Color>();
+        Collection<Point> stripPos = new Collection<Point>();
+        Collection<System.Drawing.Color> stripColor = new Collection<System.Drawing.Color>();
 
         const int Bpp = 4;
 
@@ -201,6 +150,7 @@ namespace DxCapture
             Read_Ini_File();
             Set_LED_Positions();
 
+            
             /*
             float gamma_R = (float) 0.45;
             float gamma_G = (float) 0.45;
@@ -294,7 +244,7 @@ namespace DxCapture
         }
         // END-MONITOR SLEEP DETECTION 
 
-        Color avcs(DataStream gs, Collection<long> positions)
+        System.Drawing.Color avcs(byte[] gs, Collection<long> positions)
         {
             byte[] bu = new byte[4];
             int r = 0;
@@ -306,8 +256,8 @@ namespace DxCapture
 
             foreach (long pos in positions)
             {
-                gs.Position = pos;
-                gs.Read(bu, 0, 4);
+                //gs.Position = pos;
+                //gs.Read(bu, 0, 4);
                 r += bu[2];
                 g += bu[1];
                 b += bu[0];
@@ -316,7 +266,7 @@ namespace DxCapture
                 
             }
 
-            return Color.FromArgb(r / i, g / i, b / i);
+            return System.Drawing.Color.FromArgb(r / i, g / i, b / i);
         }
 
         void Read_Ini_File()
@@ -381,50 +331,50 @@ namespace DxCapture
             ScreenPanel.Height = (int)(100 / ekran_orani);
             ScreenPanel.Width = 100;
 
-            long x, y;
-            long pos;
+            int x, y;
+            Point pos = new Point { X = 0, Y = 0 };
 
 
             int bottom_right_length = (int)((Screen_Width-(2*m))* (((float)FRAME_LED_BOTTOM_RIGHT / (float)(FRAME_LED_BOTTOM_LEFT + FRAME_LED_GAP + FRAME_LED_BOTTOM_RIGHT))));
             y = sy;//Sağ alttan sol alta
             for (x = bottom_right_length+m; x > m; x -= o)
             {
-                pos = (y * Screen_Width + x) * Bpp;
+                pos.X = x;
+                pos.Y = y;
                 stripPos.Add(pos);
-                stripColor.Add(Color.Blue);
             }
 
             x = m;//sol alttan sol üste
             for (y = sy - 1; y > m + 1; y -= o)
             {
-                pos = (y * Screen_Width + x) * Bpp;
+                pos.X = x;
+                pos.Y = y;
                 stripPos.Add(pos);
-                stripColor.Add(Color.Yellow);
             }
 
             y = m; //sol ustten sağ üste
             for (x = m; x < sx; x += o)
             {
-                pos = (y * Screen_Width + x) * Bpp;
+                pos.X = x;
+                pos.Y = y;
                 stripPos.Add(pos);
-                stripColor.Add(Color.Red);
             }
 
             x = sx; //sağ usten sağ alta
             for (y = m + 1; y < sy - 1; y += o)
             {
-                pos = (y * Screen_Width + x) * Bpp;
+                pos.X = x;
+                pos.Y = y;
                 stripPos.Add(pos);
-                stripColor.Add(Color.Green);
             }
 
             int bottom_left_length = (int)((Screen_Width - (2 * m)) * (((float)FRAME_LED_BOTTOM_LEFT / (float)(FRAME_LED_BOTTOM_LEFT + FRAME_LED_GAP + FRAME_LED_BOTTOM_RIGHT))));
             y = sy;//Sağ alttan sol alta
             for (x = sx; x > sx-bottom_left_length; x -= o)
             {
-                pos = (y * Screen_Width + x) * Bpp;
+                pos.X = x;
+                pos.Y = y;
                 stripPos.Add(pos);
-                stripColor.Add(Color.Blue);
             }
 
 
@@ -432,109 +382,185 @@ namespace DxCapture
         }
         void Calculate()
         {
-            Surface s = sc.CaptureScreen();
-            DataRectangle dr = s.LockRectangle(LockFlags.None);
-            DataStream gs = dr.Data;
-            //second display
-            //Surface s2 = sc.CaptureScreen2();
-            //DataRectangle dr2 = s2.LockRectangle(LockFlags.None);
-            //DataStream gs2 = dr2.Data;
-
 
             
-            byte[] bu = new byte[4];
+            Rectangle bounds = Screen.GetBounds(Screen.GetBounds(Point.Empty));
+            Point[] stripPos_array = new Point[stripPos.Count] ;
+            stripPos.CopyTo(stripPos_array,0);
+
+            byte[] LEDarray = new Byte[stripPos.Count*3];
+            LEDarray = ScreenShot.CaptureImage(bounds, stripPos_array);
+
+
             int r = 0;
             int g = 0;
             int b = 0;
-            int i = 0;
+            //int i = 0;
 
             int led_oran =  (stripPos.Count() / TOTAL_LED_COUNT)+1;
             int Tx_Buffer_ID = 0;
 
-            foreach (long pos in stripPos)
+            for (int i = 0; i < LEDarray.Length;i++ )
             {
-                gs.Position = pos;
-                gs.Read(bu, 0, 4);
-                r += bu[2];
-                g += bu[1];
-                b += bu[0];
-                i++;
+                if (i % 3 == 0) r += LEDarray[i];
+                if (i % 3 == 1) g += LEDarray[i];
+                if (i % 3 == 2) b += LEDarray[i];
 
 
-                if (i % led_oran == 0)
-                    {
 
-                        
+                if (i % (3 * led_oran) == 0)
+                {
 
-                        r = r / led_oran;
-                        g = g / led_oran;
-                        b = b / led_oran;
 
-                        r = (int)(r * POWER_LEVEL * 0.9);
-                        g = (int)(g * POWER_LEVEL * 1.0);
-                        b = (int)(b * POWER_LEVEL * 0.85);
 
-                        if (r > 250) r = 250;
-                        if (g > 250) g = 250;
-                        if (b > 250) b = 250;
+                    r = r / led_oran;
+                    g = g / led_oran;
+                    b = b / led_oran;
 
-                        //stripColor[Tx_Buffer_ID] = Color.FromArgb(r , g , b );
-                        COM_Tx_Buffer[(Tx_Buffer_ID * 3) + 1] = (byte)(r); //GammaE[(byte)(r)]; //RedRamp[(byte)(r)];// gamma8[(byte)(r)];
-                        COM_Tx_Buffer[(Tx_Buffer_ID * 3) + 2] = (byte)(g); //GammaE[(byte)(g)];//GreenRamp[(byte)(g)];// gamma8[(byte)(g)];
-                        COM_Tx_Buffer[(Tx_Buffer_ID * 3) + 3] = (byte)(b); // GammaE[(byte)(b)];//BlueRamp[(byte)(b)];// gamma8[(byte)(b)];
-                        r = 0;
-                        g = 0;
-                        b = 0;
+                    r = (int)(r * POWER_LEVEL * 0.9);
+                    g = (int)(g * POWER_LEVEL * 1.0);
+                    b = (int)(b * POWER_LEVEL * 0.85);
 
-                        Tx_Buffer_ID++;
-                    }
-                
+                    if (r > 250) r = 250;
+                    if (g > 250) g = 250;
+                    if (b > 250) b = 250;
+
+                    //stripColor[Tx_Buffer_ID] = Color.FromArgb(r , g , b );
+                    COM_Tx_Buffer[(Tx_Buffer_ID * 3) + 1] = (byte)(r); //GammaE[(byte)(r)]; //RedRamp[(byte)(r)];// gamma8[(byte)(r)];
+                    COM_Tx_Buffer[(Tx_Buffer_ID * 3) + 2] = (byte)(g); //GammaE[(byte)(g)];//GreenRamp[(byte)(g)];// gamma8[(byte)(g)];
+                    COM_Tx_Buffer[(Tx_Buffer_ID * 3) + 3] = (byte)(b); // GammaE[(byte)(b)];//BlueRamp[(byte)(b)];// gamma8[(byte)(b)];
+                    r = 0;
+                    g = 0;
+                    b = 0;
+
+                    Tx_Buffer_ID++;
+                }
+
             }
 
-            s.UnlockRectangle();
-            s.Dispose();
+            //s.UnlockRectangle();
+            //s.Dispose();
+            //gs.Close();
+            //gs.Dispose();
+            //surfaceSource.Dispose();
+            //device1.Dispose();
+            //direct3D.Dispose();
             //s2.UnlockRectangle();
             //s2.Dispose();
         }
+             
 
-       /*
-        void dump_buffer()
+        /// <summary>
+        ///     Updates the list of processes
+        /// </summary>
+        private void UpdateProcessList()
+        {
+            // update processCache
+            var processes = Process.GetProcesses().Where(process => !processBlacklist.Contains(process.ProcessName));
+
+            // prune closed processes
+            for (var i = processList.Items.Count - 1; i > 0; i--)
             {
-               IDirect3DSurface9* pRenderTarget=NULL;
-               IDirect3DSurface9* pDestTarget=NULL;
-                 const char file[] = "cap.bmp";
-               // sanity checks.
-               if (Device == NULL)
-                  return;
-
-               // get the render target surface.
-               HRESULT hr = Device->GetRenderTarget(0, &pRenderTarget);
-               // get the current adapter display mode.
-               //hr = pDirect3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT,&d3ddisplaymode);
-
-               // create a destination surface.
-               hr = Device->CreateOffscreenPlainSurface(DisplayMde.Width,
-                                     DisplayMde.Height,
-                                     DisplayMde.Format,
-                                     D3DPOOL_SYSTEMMEM,
-                                     &pDestTarget,
-                                     NULL);
-               //copy the render target to the destination surface.
-               hr = Device->GetRenderTargetData(pRenderTarget, pDestTarget);
-               //save its contents to a bitmap file.
-               hr = D3DXSaveSurfaceToFile(file,
-                                          D3DXIFF_BMP,
-                                          pDestTarget,
-                                          NULL,
-                                          NULL);
-
-               // clean up.
-               pRenderTarget->Release();
-               pDestTarget->Release();
+                var process = processList.Items[i] as string;
+                if (!processes.Any(p => p.ProcessName == process))
+                {
+                    processList.Items.RemoveAt(i);
+                    processCache.Remove(process);
+                }
             }
-        */
 
+            // add new processes
+            foreach (var process in processes)
+            {
+                if (!processList.Items.Contains(process.ProcessName))
+                {
+                    if (process.MainWindowHandle != IntPtr.Zero)
+                    {
+                        processList.Items.Add(process.ProcessName);
+                        processCache.Add(process.ProcessName);
+                    }
 
+                    // getting MainWindowHandle is 'heavy' -> pause a bit to spread the load
+                    Thread.Sleep(10);
+                }
+            }
+        }
+
+        ///     Gets the WindowHandle for the given Process
+        private IntPtr FindWindowHandle(string processName)
+        {
+            var process = Process.GetProcessesByName(processName).FirstOrDefault(p => p.MainWindowHandle != IntPtr.Zero);
+            return process != null ? process.MainWindowHandle : IntPtr.Zero;
+        }
+        /// <summary>
+        ///     remove the menu, resize the window, remove border
+        /// </summary>
+        private void RemoveBorder(string procName)
+        {
+            var targetHandle = FindWindowHandle(procName);
+            if (targetHandle == IntPtr.Zero) return;
+
+            RemoveBorder(targetHandle);
+        }
+
+        /// <summary>
+        ///     remove the menu, resize the window, remove border
+        /// </summary>
+        private bool RemoveBorder(IntPtr hWnd)
+        {
+            var targetScreen = Screen.FromHandle(hWnd);
+            return RemoveBorderRect(hWnd, targetScreen.Bounds);
+        }
+
+        /// <summary>
+        ///     remove the menu, resize the window, remove border
+        /// </summary>
+        private bool RemoveBorderRect(IntPtr targetHandle, System.Drawing.Rectangle targetFrame)
+        {
+            // check windowstyles
+            var windowStyle = Native.GetWindowLong(targetHandle, WindowLongIndex.Style);
+
+            var newWindowStyle = (windowStyle
+                                  & ~(WindowStyleFlags.ExtendedDlgmodalframe | WindowStyleFlags.Caption
+                                      | WindowStyleFlags.ThickFrame | WindowStyleFlags.Minimize
+                                      | WindowStyleFlags.Maximize | WindowStyleFlags.SystemMenu
+                                      | WindowStyleFlags.MaximizeBox | WindowStyleFlags.MinimizeBox
+                                      | WindowStyleFlags.Border | WindowStyleFlags.ExtendedComposited));
+
+            // if the windowstyles differ this window hasn't been made borderless yet
+            if (windowStyle != newWindowStyle)
+            {
+                // remove the menu and menuitems and force a redraw
+                var menuHandle = Native.GetMenu(targetHandle);
+                var menuItemCount = Native.GetMenuItemCount(menuHandle);
+
+                for (var i = 0; i < menuItemCount; i++)
+                {
+                    Native.RemoveMenu(menuHandle, 0, MenuFlags.ByPosition | MenuFlags.Remove);
+                }
+
+                Native.DrawMenuBar(targetHandle);
+
+                // update windowstyle & position
+                Native.SetWindowLong(targetHandle, WindowLongIndex.Style, newWindowStyle);
+                Native.SetWindowPos(
+                    targetHandle,
+                    0,
+                    targetFrame.X,
+                    targetFrame.Y,
+                    targetFrame.Width,
+                    targetFrame.Height,
+                    SetWindowPosFlags.ShowWindow | SetWindowPosFlags.NoOwnerZOrder);
+                return true;
+            }
+
+            return false;
+        }
+        /// <summary>
+        /// End of Pseudo Full Screen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void topLeft_Paint(object sender, PaintEventArgs e)
         {
@@ -713,23 +739,6 @@ namespace DxCapture
             Screen[] screendata = Screen.AllScreens;
             textBox1.Text = screendata.Length.ToString() ;
 
-
-
-
-                //textBox1.Text = cpuCounter.NextValue() + "%"; ;
-
-                //this.Text = Process.GetCurrentProcess().ProcessName;
-
-                //foreach (Process proc in Process.GetProcesses())
-                {
-                    //using (PerformanceCounter pcProcess = new PerformanceCounter("Process", "% Processor Time", proc.ProcessName))
-                    {
-                        //pcProcess.NextValue();
-                        //System.Threading.Thread.Sleep(1000);
-                        //textBox1.Text = textBox1.Text + "Process:{0} CPU% {1}" + proc.ProcessName;// +pcProcess.NextValue();
-                    }
-                }
-
         }
 
         private void RunOnStartup_CheckedChanged(object sender, EventArgs e)
@@ -748,26 +757,7 @@ namespace DxCapture
 
         private void pseudoFullScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process[] processes = Process.GetProcessesByName("WorldOftanks");
-            foreach (Process p in processes)
-            {
-                IntPtr handle = p.MainWindowHandle;
-                RECT Rect = new RECT();
-                if (GetWindowRect(handle, ref Rect))
-                    MoveWindow(handle, -5, -5, Screen.PrimaryScreen.Bounds.Width+10, Screen.PrimaryScreen.Bounds.Height+500, true);
-
-                int style = GetWindowLong(handle, GWL_STYLE);
-
-                SetWindowLong(handle, GWL_STYLE, (style + WS_CAPTION + WS_SIZEBOX));
-
-                
-            }
-
-
-   
-
-
-
+            RemoveBorder("WorldOfTanks");
         }
 
         private void tabPage4_Click(object sender, EventArgs e)
@@ -832,6 +822,16 @@ namespace DxCapture
             COM_Tx_Buffer[TOTAL_LED_COUNT * 3] = (byte)255; //SHOW 
             if ((SerialPortName != "COM0") && (Monitor_Sleeping==false))
                 serialPort1.Write(COM_Tx_Buffer, 0, (TOTAL_LED_COUNT * 3) + 3);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            UpdateProcessList();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            
         }
 
 
