@@ -58,14 +58,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AmbiLED_HD.exe" size="334336">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AmbiLED_HD.exe" size="335360">
       <assemblyIdentity name="AmbiLED_HD" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>8Kwzor1+KUMOuTvTmBozjtDzkfA=</dsig:DigestValue>
+        <dsig:DigestValue>2LlDcl/aeAUUSkGzo2xeVpqe53Y=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

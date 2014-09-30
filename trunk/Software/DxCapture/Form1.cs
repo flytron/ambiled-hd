@@ -45,7 +45,7 @@ namespace AmbiLED
 
 
         ///     list of useless processes
-        private readonly string[] processBlacklist = { "explorer", "AmbiLED", "IW4 Console", "XSplit" };
+        private readonly string[] processBlacklist = { "explorer", "AmbiLED_HD", "chrome","devenv", "IW4 Console", "XSplit" };
         ///     list of currently running processes
         private List<string> processCache = new List<string>();
 
@@ -466,6 +466,7 @@ namespace AmbiLED
                 {
                     processList.Items.RemoveAt(i);
                     processCache.Remove(process);
+                    (pseudoFullScreenToolStripMenuItem as ToolStripMenuItem).DropDownItems.RemoveAt(i);
                 }
             }
 
@@ -478,6 +479,7 @@ namespace AmbiLED
                     {
                         processList.Items.Add(process.ProcessName);
                         processCache.Add(process.ProcessName);
+                        (pseudoFullScreenToolStripMenuItem as ToolStripMenuItem).DropDownItems.Add(process.ProcessName,null, new EventHandler(pseudoFullScreenToolStripMenuItem_Click));
                     }
 
                     // getting MainWindowHandle is 'heavy' -> pause a bit to spread the load
@@ -497,6 +499,7 @@ namespace AmbiLED
         /// </summary>
         private void RemoveBorder(string procName)
         {
+            
             var targetHandle = FindWindowHandle(procName);
             if (targetHandle == IntPtr.Zero) return;
 
@@ -618,7 +621,8 @@ namespace AmbiLED
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-
+            UpdateProcessList();
+            
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -757,7 +761,21 @@ namespace AmbiLED
 
         private void pseudoFullScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RemoveBorder("WorldOfTanks");
+            DialogResult dialogResult = MessageBox.Show("Warning, " + ((ToolStripMenuItem)sender).Text + " application will be stretched to full screen.\n" +
+            "All windows based, borders and application control buttons will be dissappear for current session.\nYou can close this application "+
+                "from it's own menu or simply press ALT+F4 keys to close it.\nTo switching between windows applications press ALT+TAB keys.\n\nDo you want to continue? ",
+                "Pseudo Full Screen Alert",
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Warning);
+            if (dialogResult == DialogResult.Yes)
+            {
+                RemoveBorder(((ToolStripMenuItem)sender).Text);
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+            
         }
 
         private void tabPage4_Click(object sender, EventArgs e)
