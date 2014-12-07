@@ -10,5 +10,5 @@ E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\Debug\AmbiLED_H
 E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\Debug\AmbiLED_HD.exe
 E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\Debug\AmbiLED_HD.pdb
 E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\Debug\AmbiLED.Form1.resources
-E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\Debug\AmbiLED HD.csprojResolveAssemblyReference.cache
 E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\Debug\AmbiLED HD.csproj.GenerateResource.Cache
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\Debug\AmbiLED HD.csprojResolveAssemblyReference.cache

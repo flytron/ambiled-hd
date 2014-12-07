@@ -24,7 +24,7 @@ namespace AmbiLED
     public partial class Form1 : Form
     {
 
-        // MONITOR SLEEP DETECTION 
+        //----------MONITOR SLEEP DETECTION------------------- 
         Guid GUID_CONSOLE_DISPLAY_STATE = new Guid("6fe69556-704a-47a0-8f24-c28d936fda47");
         const int DEVICE_NOTIFY_WINDOW_HANDLE = 0x00000000;
         const int WM_SYSCOMMAND = 0x0112;
@@ -41,7 +41,7 @@ namespace AmbiLED
         private static extern int SendMessage(int hWnd, int hMsg, int wParam, int lParam);
 
         #endregion
-        // END - MONITOR SLEEP DETECTION
+        //----------END - MONITOR SLEEP DETECTION-------------
 
 
         ///     list of useless processes
@@ -64,6 +64,8 @@ namespace AmbiLED
             public int x, y;
         }
 
+
+        //----------PSEUDO FULL SCREEN DLLs----------------------------
         //Gets window rect
         [DllImport("user32.dll", SetLastError = true)]
         static extern bool GetWindowRect(IntPtr hWnd, ref RECT Rect);
@@ -88,12 +90,41 @@ namespace AmbiLED
         public static int WS_CAPTION = 0x00C00000; //window with a title bar
         private const int WS_SIZEBOX = 0x040000;
         private const int WS_EX_DLGMODALFRAME = 0x00000001;
+        //-------------------------------------------------------
 
-        
-        
+        KeyboardHook hook = new KeyboardHook();
+
+        /*
+        //------ HOT KEY DLLs------------------------------------
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+        enum KeyModifier
+        {
+            None = 0,
+            Alt = 1,
+            Control = 2,
+            Shift = 4,
+            WinKey = 8
+        }
+        //-------------------------------------------------------    
+
+        //--------GET Focused Window Handle-----------------------------
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+        //-------------------------------------------------------
+        */
+
+        //------ GLOBAL VARIABLES------------------------------------
         byte[] COM_Tx_Buffer = new byte[2000];
+        byte[] StaticColorBuffer = new byte[2000];
 
-        float POWER_LEVEL = (float) 0.3;
+        float POWER_LEVEL = (float)0.3;
         int Refresh_Interval = 100;
         int Power_Level = 30;
         string SerialPortName = "COM0";
@@ -103,13 +134,11 @@ namespace AmbiLED
         int FRAME_LED_LEFT = 10;
         int FRAME_LED_TOP = 10;
         int FRAME_LED_RIGHT = 10;
-        int FRAME_LED_BOTTOM_LEFT = 5; 
+        int FRAME_LED_BOTTOM_LEFT = 5;
         int FRAME_LED_BOTTOM_RIGHT = 5;
         int FRAME_LED_GAP = 0;
         int TOTAL_LED_COUNT = 40;
-
-            
-
+        //-------------------------------------------------------
 
         /*
         byte[] RedRamp = new byte[256];
@@ -150,6 +179,12 @@ namespace AmbiLED
             Read_Ini_File();
             Set_LED_Positions();
 
+            // register the event that is fired after the key press.
+            hook.KeyPressed += new EventHandler<KeyPressedEventArgs>(hook_KeyPressed);
+            // register the control + alt + F12 combination as hot key.
+            hook.RegisterHotKey(AmbiLED_HD.ModifierKeys.Control | AmbiLED_HD.ModifierKeys.Alt, Keys.F12);
+
+            //RegisterHotKey(this.Handle, 0, (int)KeyModifier.Shift + (int)KeyModifier.Alt, Keys.P.GetHashCode());
             
             /*
             float gamma_R = (float) 0.45;
@@ -171,7 +206,7 @@ namespace AmbiLED
             }
          catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("Whoops! AmbiLED HD cannot working.\n\n" + ex.ToString());
             }
         }
 
@@ -195,8 +230,17 @@ namespace AmbiLED
                 //MyNotifyIcon.Text = "Tooltip message here";
                 this.ShowInTaskbar = false;
                 this.Hide();
+
+
+                // Get a list of serial port names. 
                 string[] ports = SerialPort.GetPortNames();
-                textBox1.Text = string.Join(" ,", ports);
+                ComPortCombo.Items.Clear();
+
+                // Display each port name to the console. 
+                foreach (string port in ports)
+                {
+                    ComPortCombo.Items.Add(port);
+                }
 
 
                 RegisterPowerSettingNotification(this.Handle, ref GUID_CONSOLE_DISPLAY_STATE, DEVICE_NOTIFY_WINDOW_HANDLE); // MONITOR SLEEP DETECTION 
@@ -208,6 +252,7 @@ namespace AmbiLED
                 MessageBox.Show(ex.ToString());
             }
         }
+
 
 
         // MONITOR SLEEP DETECTION 
@@ -241,6 +286,8 @@ namespace AmbiLED
             }
 
             base.WndProc(ref m);
+
+            
         }
         // END-MONITOR SLEEP DETECTION 
 
@@ -300,6 +347,30 @@ namespace AmbiLED
             Power_Level =  ini.IniReadInt("MAIN", "Power_Level");
             SerialPortName = ini.IniReadValue("MAIN", "PortName");
 
+
+            
+            if (SerialPortName == "COM0") // If com port didnt set
+                {
+                // Get a list of serial port names. 
+                string[] ports = SerialPort.GetPortNames();
+
+                // Display each port name to the console. 
+                foreach (string port in ports)
+                    {
+                        try
+                        {   //TEST com port
+                            serialPort1.PortName = port;
+                            serialPort1.Open();
+                            serialPort1.Close();
+                            SerialPortName = port; //Set if it's working. 
+                        }
+                        catch
+                        {
+                        }
+
+                    }
+                }
+
             if (SerialPortName != "COM0")
                 {
                 serialPort1.PortName = SerialPortName;
@@ -307,23 +378,25 @@ namespace AmbiLED
 
                 serialPort1.Open();
                 serialPort1.Encoding = System.Text.Encoding.UTF8;
+                ComPortCombo.Text = SerialPortName;
                 }
 
             CaptureTimer.Interval = Refresh_Interval;
-            CaptureTimer.Enabled = true;
-
+            
             POWER_LEVEL = (float)Power_Level / 100;
+
+            mode_select(1);
 
         }
 
-        void Set_LED_Positions()
+        void Set_LED_Positions(int Left_Right_Space = 8, int Up_Down_Space = 8 )
         {
             int o = 2;// ((Screen.PrimaryScreen.Bounds.Width + Screen.PrimaryScreen.Bounds.Height) * 2) / (led_adet * 10);
-            int m = 8;
-            int Screen_Width = Screen.PrimaryScreen.Bounds.Width; //SystemInformation.VirtualScreen.Width; 
+            //int m = 8;
+            int Screen_Width =  Screen.PrimaryScreen.Bounds.Width; //SystemInformation.VirtualScreen.Width; 
             int Screen_Height = Screen.PrimaryScreen.Bounds.Height; //SystemInformation.VirtualScreen.Height; 
-            int sx = Screen_Width - m;
-            int sy = Screen_Height - m;
+            int sx = Screen_Width - Left_Right_Space;
+            int sy = Screen_Height - Up_Down_Space;
 
 
             float ekran_orani = (float)Screen_Width / Screen_Height;
@@ -333,27 +406,28 @@ namespace AmbiLED
 
             int x, y;
             Point pos = new Point { X = 0, Y = 0 };
+            stripPos.Clear();
 
 
-            int bottom_right_length = (int)((Screen_Width-(2*m))* (((float)FRAME_LED_BOTTOM_RIGHT / (float)(FRAME_LED_BOTTOM_LEFT + FRAME_LED_GAP + FRAME_LED_BOTTOM_RIGHT))));
+            int bottom_right_length = (int)((Screen_Width-(2*Left_Right_Space))* (((float)FRAME_LED_BOTTOM_RIGHT / (float)(FRAME_LED_BOTTOM_LEFT + FRAME_LED_GAP + FRAME_LED_BOTTOM_RIGHT))));
             y = sy;//Sağ alttan sol alta
-            for (x = bottom_right_length+m; x > m; x -= o)
+            for (x = bottom_right_length+1; x > 1; x -= o)
             {
                 pos.X = x;
                 pos.Y = y;
                 stripPos.Add(pos);
             }
 
-            x = m;//sol alttan sol üste
-            for (y = sy - 1; y > m + 1; y -= o)
+            x = Left_Right_Space;//sol alttan sol üste
+            for (y = Screen_Height - 1; y >  1; y -= o)
             {
                 pos.X = x;
                 pos.Y = y;
                 stripPos.Add(pos);
             }
 
-            y = m; //sol ustten sağ üste
-            for (x = m; x < sx; x += o)
+            y = Up_Down_Space; //sol ustten sağ üste
+            for (x = 1; x < Screen_Width-1; x += o)
             {
                 pos.X = x;
                 pos.Y = y;
@@ -361,16 +435,16 @@ namespace AmbiLED
             }
 
             x = sx; //sağ usten sağ alta
-            for (y = m + 1; y < sy - 1; y += o)
+            for (y = 1; y < Screen_Height - 1; y += o)
             {
                 pos.X = x;
                 pos.Y = y;
                 stripPos.Add(pos);
             }
 
-            int bottom_left_length = (int)((Screen_Width - (2 * m)) * (((float)FRAME_LED_BOTTOM_LEFT / (float)(FRAME_LED_BOTTOM_LEFT + FRAME_LED_GAP + FRAME_LED_BOTTOM_RIGHT))));
+            int bottom_left_length = (int)((Screen_Width - (2 * Left_Right_Space)) * (((float)FRAME_LED_BOTTOM_LEFT / (float)(FRAME_LED_BOTTOM_LEFT + FRAME_LED_GAP + FRAME_LED_BOTTOM_RIGHT))));
             y = sy;//Sağ alttan sol alta
-            for (x = sx; x > sx-bottom_left_length; x -= o)
+            for (x = Screen_Width - 1; x > Screen_Width - bottom_left_length; x -= o)
             {
                 pos.X = x;
                 pos.Y = y;
@@ -380,11 +454,35 @@ namespace AmbiLED
 
         
         }
+
+        void SET_Ratio(int Xratio, int Yratio)
+        {
+
+            int w = Screen.PrimaryScreen.Bounds.Width;
+            int h = Screen.PrimaryScreen.Bounds.Height;
+
+            int h2 = (w * Yratio) / Xratio; // display ratio difference calculation
+            int w2 = (h * Xratio) / Yratio; // display ratio difference calculation 
+
+            int blank_space = 0;
+            int blank_space2 = 0;
+
+            if ((h - h2) >= 0)
+                blank_space = (h - h2) / 2;
+            else
+                blank_space2 = (w - w2) / 2;
+
+            Set_LED_Positions(blank_space2 + 8, blank_space + 8); //Set the blank spaces
+        }
+
         void Calculate()
         {
 
             
             Rectangle bounds = Screen.GetBounds(Screen.GetBounds(Point.Empty));
+            //bounds.Width = bounds.Width * 2;
+           
+
             Point[] stripPos_array = new Point[stripPos.Count] ;
             stripPos.CopyTo(stripPos_array,0);
 
@@ -408,7 +506,7 @@ namespace AmbiLED
 
 
 
-                if (i % (3 * led_oran) == 0)
+                if (i % (3 * led_oran) == (3*led_oran)-1)
                 {
 
 
@@ -417,9 +515,13 @@ namespace AmbiLED
                     g = g / led_oran;
                     b = b / led_oran;
 
-                    r = (int)(r * POWER_LEVEL * 0.9);
+                    //r = (int)(r * POWER_LEVEL * 0.9);
+                    //g = (int)(g * POWER_LEVEL * 1.0);
+                    //b = (int)(b * POWER_LEVEL * 0.85);
+
+                    r = (int)(r * POWER_LEVEL * 1.0);
                     g = (int)(g * POWER_LEVEL * 1.0);
-                    b = (int)(b * POWER_LEVEL * 0.85);
+                    b = (int)(b * POWER_LEVEL * 1.0);
 
                     if (r > 250) r = 250;
                     if (g > 250) g = 250;
@@ -448,7 +550,71 @@ namespace AmbiLED
             //s2.UnlockRectangle();
             //s2.Dispose();
         }
-             
+            
+        private void mode_select(int mode_number)
+        {
+            defaultToolStripMenuItem.Checked = false;
+            sleepToolStripMenuItem.Checked = false;
+            audioToolStripMenuItem.Checked = false;
+            colorSelectToolStripMenuItem.Checked = false;
+
+            switch (mode_number)
+            {
+                case 1:
+                    CaptureTimer.Enabled = true;
+                    StaticColorTimer.Enabled = false;
+                    defaultToolStripMenuItem.Checked = true;
+                    break;
+                case 2:
+                    CaptureTimer.Enabled = false;
+                    StaticColorTimer.Enabled = false;
+                    sleepToolStripMenuItem.Checked = true;
+                    break;
+                case 3:
+                    CaptureTimer.Enabled = false;
+                    StaticColorTimer.Enabled = false;
+                    //AUDIO CODE
+                    audioToolStripMenuItem.Checked = true;
+                    break;
+                case 4:
+                    CaptureTimer.Enabled = false;
+                    StaticColorTimer.Enabled = true;
+                    colorSelectToolStripMenuItem.Checked = true;
+
+                    ColorDialog colorDialog1 = new ColorDialog();
+                    colorDialog1.AllowFullOpen = true;
+                    colorDialog1.FullOpen = true;
+                    colorDialog1.AnyColor = true;
+                    colorDialog1.SolidColorOnly = true;
+
+                    if (colorDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        byte R = (byte)colorDialog1.Color.R;
+                        byte G = (byte)colorDialog1.Color.G ;
+                        byte B = (byte)colorDialog1.Color.B;
+                        //if (R > 250) R = 250;
+                        //if (G > 250) G = 250;
+                        //if (B > 250) B = 250;
+
+
+                        for (int i = 0; i < 512; i++)
+                        {
+                            COM_Tx_Buffer[(i * 3) + 1] = (byte)(R >> 1);
+                            COM_Tx_Buffer[(i * 3) + 2] = (byte)(G >> 1);
+                            COM_Tx_Buffer[(i * 3) + 3] = (byte)(B >> 1);
+                        }
+                        COM_Tx_Buffer[512 * 3] = (byte)255; //SHOW 
+                        StaticColorBuffer = COM_Tx_Buffer;
+                        if ((SerialPortName != "COM0") && (Monitor_Sleeping == false))
+                            serialPort1.Write(COM_Tx_Buffer, 0, (512 * 3) + 3);
+                    }
+                    break;
+                default:
+                    
+                    break;
+            }
+
+        }
 
         /// <summary>
         ///     Updates the list of processes
@@ -488,6 +654,16 @@ namespace AmbiLED
             }
         }
 
+        ///    KEYBOARD SHORTCUT CTRL+ALT+F12
+         void hook_KeyPressed(object sender, KeyPressedEventArgs e)
+            {
+                // show the keys pressed in a label.
+                //label8.Text = e.Modifier.ToString() + " + " + e.Key.ToString() + "  Mouse:" + Cursor.Position.X;
+
+                Set_LED_Positions(Cursor.Position.X + 5, Cursor.Position.Y + 5); //Set the blank spaces
+
+            }
+        
         ///     Gets the WindowHandle for the given Process
         private IntPtr FindWindowHandle(string processName)
         {
@@ -564,6 +740,19 @@ namespace AmbiLED
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// 
+
+        /// Power Set
+        /// 
+
+        private void Set_Power_Level(float lvl)
+        {
+            POWER_LEVEL = lvl;
+            // connect to INI file
+            IniFile ini = new IniFile(Application.StartupPath + @"\\config.ini");
+            ini.IniWriteValue("MAIN", "Power_Level", (lvl * 100).ToString());
+        }
+        /// END POWER SET
 
         private void topLeft_Paint(object sender, PaintEventArgs e)
         {
@@ -584,6 +773,8 @@ namespace AmbiLED
         {
             this.Hide();
             e.Cancel = true; // this cancels the close event.
+            //UnregisterHotKey(this.Handle, 0);       // Unregister hotkey with id 0 before closing the form. You might want to call this more than once with different id values if you are planning to register more than one hotkey.
+
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -607,9 +798,16 @@ namespace AmbiLED
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Environment.Exit(1);
-            serialPort1.Close();
-            Application.Exit();
+
+            DialogResult d = MessageBox.Show("Are you sure you want to close AmbiLED HD?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (d == DialogResult.Yes)
+            {
+                Environment.Exit(1);
+                serialPort1.Close();
+                Application.Exit();
+            }
+ 
         }
 
         private void showSettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -627,37 +825,37 @@ namespace AmbiLED
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            POWER_LEVEL = (float)0.1;
+            Set_Power_Level((float)0.1);
         }
 
         private void toolStripMenuItem7_Click(object sender, EventArgs e)
         {
-            POWER_LEVEL = (float)0.15;
+            Set_Power_Level((float)0.15);
         }
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            POWER_LEVEL = (float)0.2;
+            Set_Power_Level((float)0.2);
         }
 
         private void toolStripMenuItem8_Click(object sender, EventArgs e)
         {
-            POWER_LEVEL = (float)0.25;
+            Set_Power_Level((float)0.25);
         }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
-            POWER_LEVEL = (float)0.3;
+            Set_Power_Level((float)0.3);
         }
 
         private void toolStripMenuItem5_Click(object sender, EventArgs e)
         {
-            POWER_LEVEL = (float)0.4;
+            Set_Power_Level((float)0.4);
         }
 
         private void toolStripMenuItem6_Click(object sender, EventArgs e)
         {
-            POWER_LEVEL = (float)0.5;
+            Set_Power_Level((float)0.5);
         }
         
         private void Form1_Deactivate(object sender, EventArgs e)
@@ -668,23 +866,9 @@ namespace AmbiLED
 
         private void runOnStartupToolStripMenuItem_Click(object sender, EventArgs e)
         {
-        
 
 
-        }
 
-        private void sleepModeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (CaptureTimer.Enabled == true)
-            {
-                CaptureTimer.Enabled = false;
-                sleepModeToolStripMenuItem.Checked = true;
-            }
-            else
-            {
-                CaptureTimer.Enabled = true;
-                sleepModeToolStripMenuItem.Checked = false;
-            }
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -741,7 +925,7 @@ namespace AmbiLED
         {
 
             Screen[] screendata = Screen.AllScreens;
-            textBox1.Text = screendata.Length.ToString() ;
+            button1.Text = "Display Count: " + screendata.Length.ToString();
 
         }
 
@@ -785,21 +969,12 @@ namespace AmbiLED
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //byte[] buffer = { 254,0,0 };
-            //serialPort1.Write(buffer,0,3);
-            SendMessage(this.Handle.ToInt32(), WM_SYSCOMMAND, SC_MONITORPOWER, 2);
-
+            
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            IniFile ini = new IniFile(Application.StartupPath + @"\\config.ini");
-            ini.IniWriteValue("MAIN", "FRAME_LED_LEFT", FRAME_LED_LEFT.ToString());
-            ini.IniWriteValue("MAIN", "FRAME_LED_RIGHT", FRAME_LED_RIGHT.ToString());
-            ini.IniWriteValue("MAIN", "FRAME_LED_TOP", FRAME_LED_TOP.ToString());
-            ini.IniWriteValue("MAIN", "FRAME_LED_BOTTOM_LEFT", FRAME_LED_BOTTOM_LEFT.ToString());
-            ini.IniWriteValue("MAIN", "FRAME_LED_BOTTOM_RIGHT", FRAME_LED_BOTTOM_RIGHT.ToString());
-            ini.IniWriteValue("MAIN", "FRAME_LED_GAP", FRAME_LED_GAP.ToString());
+
             
 
         }
@@ -836,21 +1011,185 @@ namespace AmbiLED
 
         private void CaptureTimer_Tick(object sender, EventArgs e)
         {
-            Calculate();
+            CaptureTimer.Enabled = false; //timer disable to avoid from conflict
+            
+            Stopwatch sw = new Stopwatch(); //Process timer set
+            sw.Start();
+
+            Calculate(); //Capture screen and calcualte the LED colors
+            sw.Stop();
+            ProcessTimeLabel.Text = "Capture Time" + sw.Elapsed.Milliseconds + "ms"; //Print process time
+            
+            sw.Reset();
+            sw.Start();
+
             COM_Tx_Buffer[TOTAL_LED_COUNT * 3] = (byte)255; //SHOW 
-            if ((SerialPortName != "COM0") && (Monitor_Sleeping==false))
+            // Send data over serial if the device enabled
+            if ((SerialPortName != "COM0") && (Monitor_Sleeping==false)) 
                 serialPort1.Write(COM_Tx_Buffer, 0, (TOTAL_LED_COUNT * 3) + 3);
+
+            sw.Stop(); // Stop the Process timer
+            TransmitTimeLabel.Text = "Transmit Time" + sw.Elapsed.Milliseconds + "ms"; //Print Serial transmit time
+            CaptureTimer.Enabled = true; //timer enable again
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            UpdateProcessList();
+            
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             
         }
+
+        private void pseudoFullScreenToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void defaultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mode_select(1);
+        }
+
+
+        private void sleepToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mode_select(2);
+        }
+
+
+        private void audioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mode_select(3);
+        }
+
+        private void colorSelectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mode_select(4);
+        }
+
+        private void wideToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void StaticColorTimer_Tick(object sender, EventArgs e)
+        {
+            if ((SerialPortName != "COM0") && (Monitor_Sleeping == false))
+                serialPort1.Write(StaticColorBuffer, 0, (512 * 3) + 3);
+        }
+
+        private void buttonSave_Click_1(object sender, EventArgs e)
+        {
+            IniFile ini = new IniFile(Application.StartupPath + @"\\config.ini");
+            //Write to INI
+            ini.IniWriteValue("MAIN", "FRAME_LED_LEFT", Left_Textbox.Text.ToString());
+            ini.IniWriteValue("MAIN", "FRAME_LED_RIGHT", Right_Textbox.Text.ToString());
+            ini.IniWriteValue("MAIN", "FRAME_LED_TOP", Top_Textbox.Text.ToString());
+            ini.IniWriteValue("MAIN", "FRAME_LED_BOTTOM_LEFT", BottomLeft_Textbox.Text.ToString());
+            ini.IniWriteValue("MAIN", "FRAME_LED_BOTTOM_RIGHT", BottomRight_Textbox.Text.ToString());
+            ini.IniWriteValue("MAIN", "FRAME_LED_GAP", Gap_Textbox.Text.ToString());
+            // Read and refresh from INI
+            FRAME_LED_LEFT = ini.IniReadInt("MAIN", "FRAME_LED_LEFT");
+            FRAME_LED_TOP = ini.IniReadInt("MAIN", "FRAME_LED_TOP");
+            FRAME_LED_RIGHT = ini.IniReadInt("MAIN", "FRAME_LED_RIGHT");
+            FRAME_LED_BOTTOM_LEFT = ini.IniReadInt("MAIN", "FRAME_LED_BOTTOM_LEFT");
+            FRAME_LED_BOTTOM_RIGHT = ini.IniReadInt("MAIN", "FRAME_LED_BOTTOM_RIGHT");
+            FRAME_LED_GAP = ini.IniReadInt("MAIN", "FRAME_LED_GAP");
+
+            TOTAL_LED_COUNT = FRAME_LED_LEFT + FRAME_LED_TOP + FRAME_LED_RIGHT + FRAME_LED_BOTTOM_LEFT + FRAME_LED_BOTTOM_RIGHT;
+            // Refrtesh default full screen settigns.
+            fullScreenToolStripMenuItem.PerformClick();
+            // Clear the Strip buffer
+            COM_Tx_Buffer[512 * 3] = (byte)252; //Clear LED buffer and read the color sensor.(the sensor read is not important now, just for clear)
+            if ((SerialPortName != "COM0") && (Monitor_Sleeping == false))
+                serialPort1.Write(COM_Tx_Buffer, 0, (512 * 3) + 3);
+
+
+
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MonitorSleepButton_Click(object sender, EventArgs e)
+        {
+            SendMessage(this.Handle.ToInt32(), WM_SYSCOMMAND, SC_MONITORPOWER, 2);
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cinematic21x9ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SET_Ratio(21, 9);
+        }
+
+        private void hD16x9ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SET_Ratio(16, 9);
+        }
+
+        private void toolStripMenuItem9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void oLDTV4x3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SET_Ratio(4, 3);
+        }
+
+        private void fullScreenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            int w = Screen.PrimaryScreen.Bounds.Width;
+            int h = Screen.PrimaryScreen.Bounds.Height;
+            SET_Ratio(w, h);
+        }
+
+        private void autoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void onlineMovieThinBarsOnTopbottomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SET_Ratio(19, 9);
+        }
+
+        private void ComPortCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // connect to INI file
+            IniFile ini = new IniFile(Application.StartupPath + @"\\config.ini");
+            //Check port name for change
+            if (ComPortCombo.Text != ini.IniReadValue("MAIN", "PortName"))
+            {
+                ini.IniWriteValue("MAIN", "PortName", ComPortCombo.Text);
+                MessageBox.Show("Com Port changed!\n Now,You should restart the application.");
+                quitToolStripMenuItem.PerformClick();
+            }
+
+        }
+
+
 
 
 

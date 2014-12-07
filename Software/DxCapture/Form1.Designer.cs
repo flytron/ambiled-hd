@@ -11,15 +11,15 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-       /* protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-        */
+        /* protected override void Dispose(bool disposing)
+         {
+             if (disposing && (components != null))
+             {
+                 components.Dispose();
+             }
+             base.Dispose(disposing); 
+         }
+         */
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -43,16 +43,26 @@
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
-            this.showSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sleepModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ratioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fullScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cinematic21x9ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hD16x9ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oLDTV4x3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.onlineMovieThinBarsOnTopbottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.defaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sleepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.audioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pseudoFullScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.processList = new System.Windows.Forms.ListBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.ComPortCombo = new System.Windows.Forms.ComboBox();
+            this.TransmitTimeLabel = new System.Windows.Forms.Label();
+            this.ProcessTimeLabel = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.RunOnStartup = new System.Windows.Forms.CheckBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -84,11 +94,21 @@
             this.BottomRight_Textbox = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.processList = new System.Windows.Forms.ListBox();
+            this.MonitorSleepButton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.ScreenPanel = new System.Windows.Forms.Panel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.StaticColorTimer = new System.Windows.Forms.Timer(this.components);
             this.MyContextMenuStrip.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -109,6 +129,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // CaptureTimer
@@ -119,7 +142,6 @@
             // 
             this.serialPort1.BaudRate = 115200;
             this.serialPort1.PortName = "COM3";
-            this.serialPort1.WriteBufferSize = 4096;
             // 
             // MyNotifyIcon
             // 
@@ -136,9 +158,10 @@
             // 
             this.MyContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lightLevelToolStripMenuItem,
-            this.showSettingsToolStripMenuItem,
-            this.sleepModeToolStripMenuItem,
+            this.ratioToolStripMenuItem,
+            this.ModeToolStripMenuItem,
             this.pseudoFullScreenToolStripMenuItem,
+            this.showSettingsToolStripMenuItem,
             this.quitToolStripMenuItem});
             this.MyContextMenuStrip.Name = "contextMenuStrip1";
             this.MyContextMenuStrip.Size = new System.Drawing.Size(174, 136);
@@ -161,9 +184,11 @@
             // 
             // autoToolStripMenuItem
             // 
+            this.autoToolStripMenuItem.Enabled = false;
             this.autoToolStripMenuItem.Name = "autoToolStripMenuItem";
             this.autoToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.autoToolStripMenuItem.Text = "Auto";
+            this.autoToolStripMenuItem.Click += new System.EventHandler(this.autoToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -214,25 +239,106 @@
             this.toolStripMenuItem6.Text = "%50";
             this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
-            // showSettingsToolStripMenuItem
+            // ratioToolStripMenuItem
             // 
-            this.showSettingsToolStripMenuItem.Name = "showSettingsToolStripMenuItem";
-            this.showSettingsToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.showSettingsToolStripMenuItem.Text = "Show Setup";
-            this.showSettingsToolStripMenuItem.Click += new System.EventHandler(this.showSettingsToolStripMenuItem_Click);
+            this.ratioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fullScreenToolStripMenuItem,
+            this.cinematic21x9ToolStripMenuItem,
+            this.hD16x9ToolStripMenuItem,
+            this.oLDTV4x3ToolStripMenuItem,
+            this.onlineMovieThinBarsOnTopbottomToolStripMenuItem});
+            this.ratioToolStripMenuItem.Name = "ratioToolStripMenuItem";
+            this.ratioToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.ratioToolStripMenuItem.Text = "Aspect Ratio";
             // 
-            // sleepModeToolStripMenuItem
+            // fullScreenToolStripMenuItem
             // 
-            this.sleepModeToolStripMenuItem.Name = "sleepModeToolStripMenuItem";
-            this.sleepModeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.sleepModeToolStripMenuItem.Text = "Sleep Mode";
-            this.sleepModeToolStripMenuItem.Click += new System.EventHandler(this.sleepModeToolStripMenuItem_Click);
+            this.fullScreenToolStripMenuItem.Name = "fullScreenToolStripMenuItem";
+            this.fullScreenToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
+            this.fullScreenToolStripMenuItem.Text = "Default - Full Screen";
+            this.fullScreenToolStripMenuItem.Click += new System.EventHandler(this.fullScreenToolStripMenuItem_Click);
+            // 
+            // cinematic21x9ToolStripMenuItem
+            // 
+            this.cinematic21x9ToolStripMenuItem.Name = "cinematic21x9ToolStripMenuItem";
+            this.cinematic21x9ToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
+            this.cinematic21x9ToolStripMenuItem.Text = "Cinematic - 21x9";
+            this.cinematic21x9ToolStripMenuItem.Click += new System.EventHandler(this.cinematic21x9ToolStripMenuItem_Click);
+            // 
+            // hD16x9ToolStripMenuItem
+            // 
+            this.hD16x9ToolStripMenuItem.Name = "hD16x9ToolStripMenuItem";
+            this.hD16x9ToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
+            this.hD16x9ToolStripMenuItem.Text = "HD  - 16x9";
+            this.hD16x9ToolStripMenuItem.Click += new System.EventHandler(this.hD16x9ToolStripMenuItem_Click);
+            // 
+            // oLDTV4x3ToolStripMenuItem
+            // 
+            this.oLDTV4x3ToolStripMenuItem.Name = "oLDTV4x3ToolStripMenuItem";
+            this.oLDTV4x3ToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
+            this.oLDTV4x3ToolStripMenuItem.Text = "OLD TV - 4x3";
+            this.oLDTV4x3ToolStripMenuItem.Click += new System.EventHandler(this.oLDTV4x3ToolStripMenuItem_Click);
+            // 
+            // onlineMovieThinBarsOnTopbottomToolStripMenuItem
+            // 
+            this.onlineMovieThinBarsOnTopbottomToolStripMenuItem.Name = "onlineMovieThinBarsOnTopbottomToolStripMenuItem";
+            this.onlineMovieThinBarsOnTopbottomToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
+            this.onlineMovieThinBarsOnTopbottomToolStripMenuItem.Text = "Online Movie - Thin bars on top && bottom";
+            this.onlineMovieThinBarsOnTopbottomToolStripMenuItem.Click += new System.EventHandler(this.onlineMovieThinBarsOnTopbottomToolStripMenuItem_Click);
+            // 
+            // ModeToolStripMenuItem
+            // 
+            this.ModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.defaultToolStripMenuItem,
+            this.sleepToolStripMenuItem,
+            this.colorSelectToolStripMenuItem,
+            this.audioToolStripMenuItem});
+            this.ModeToolStripMenuItem.Name = "ModeToolStripMenuItem";
+            this.ModeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.ModeToolStripMenuItem.Text = "Modes";
+            // 
+            // defaultToolStripMenuItem
+            // 
+            this.defaultToolStripMenuItem.Name = "defaultToolStripMenuItem";
+            this.defaultToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.defaultToolStripMenuItem.Text = "Default";
+            this.defaultToolStripMenuItem.Click += new System.EventHandler(this.defaultToolStripMenuItem_Click);
+            // 
+            // sleepToolStripMenuItem
+            // 
+            this.sleepToolStripMenuItem.Name = "sleepToolStripMenuItem";
+            this.sleepToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.sleepToolStripMenuItem.Text = "Sleep";
+            this.sleepToolStripMenuItem.Click += new System.EventHandler(this.sleepToolStripMenuItem_Click);
+            // 
+            // colorSelectToolStripMenuItem
+            // 
+            this.colorSelectToolStripMenuItem.Name = "colorSelectToolStripMenuItem";
+            this.colorSelectToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.colorSelectToolStripMenuItem.Text = "Color Select";
+            this.colorSelectToolStripMenuItem.Click += new System.EventHandler(this.colorSelectToolStripMenuItem_Click);
+            // 
+            // audioToolStripMenuItem
+            // 
+            this.audioToolStripMenuItem.Enabled = false;
+            this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
+            this.audioToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.audioToolStripMenuItem.Text = "Audio";
+            this.audioToolStripMenuItem.Click += new System.EventHandler(this.audioToolStripMenuItem_Click);
             // 
             // pseudoFullScreenToolStripMenuItem
             // 
             this.pseudoFullScreenToolStripMenuItem.Name = "pseudoFullScreenToolStripMenuItem";
             this.pseudoFullScreenToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.pseudoFullScreenToolStripMenuItem.Text = "Pseudo Full Screen";
+            this.pseudoFullScreenToolStripMenuItem.Click += new System.EventHandler(this.pseudoFullScreenToolStripMenuItem_Click_1);
+            // 
+            // showSettingsToolStripMenuItem
+            // 
+            this.showSettingsToolStripMenuItem.Name = "showSettingsToolStripMenuItem";
+            this.showSettingsToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.showSettingsToolStripMenuItem.Text = "Settings";
+            this.showSettingsToolStripMenuItem.Click += new System.EventHandler(this.showSettingsToolStripMenuItem_Click);
             // 
             // quitToolStripMenuItem
             // 
@@ -255,10 +361,10 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.button4);
-            this.tabPage4.Controls.Add(this.button3);
-            this.tabPage4.Controls.Add(this.processList);
-            this.tabPage4.Controls.Add(this.button2);
+            this.tabPage4.Controls.Add(this.label9);
+            this.tabPage4.Controls.Add(this.ComPortCombo);
+            this.tabPage4.Controls.Add(this.TransmitTimeLabel);
+            this.tabPage4.Controls.Add(this.ProcessTimeLabel);
             this.tabPage4.Controls.Add(this.checkBox1);
             this.tabPage4.Controls.Add(this.RunOnStartup);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
@@ -270,58 +376,58 @@
             this.tabPage4.UseVisualStyleBackColor = true;
             this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
             // 
-            // button4
+            // label9
             // 
-            this.button4.Location = new System.Drawing.Point(209, 268);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 5;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(8, 13);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(26, 13);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "Port";
             // 
-            // button3
+            // ComPortCombo
             // 
-            this.button3.Location = new System.Drawing.Point(209, 212);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.ComPortCombo.FormattingEnabled = true;
+            this.ComPortCombo.Location = new System.Drawing.Point(40, 10);
+            this.ComPortCombo.Name = "ComPortCombo";
+            this.ComPortCombo.Size = new System.Drawing.Size(93, 21);
+            this.ComPortCombo.TabIndex = 9;
+            this.ComPortCombo.SelectedIndexChanged += new System.EventHandler(this.ComPortCombo_SelectedIndexChanged);
             // 
-            // processList
+            // TransmitTimeLabel
             // 
-            this.processList.FormattingEnabled = true;
-            this.processList.Location = new System.Drawing.Point(356, 108);
-            this.processList.Name = "processList";
-            this.processList.Size = new System.Drawing.Size(271, 251);
-            this.processList.TabIndex = 3;
+            this.TransmitTimeLabel.AutoSize = true;
+            this.TransmitTimeLabel.Location = new System.Drawing.Point(8, 104);
+            this.TransmitTimeLabel.Name = "TransmitTimeLabel";
+            this.TransmitTimeLabel.Size = new System.Drawing.Size(98, 13);
+            this.TransmitTimeLabel.TabIndex = 7;
+            this.TransmitTimeLabel.Text = "Transmit Time: 0ms";
             // 
-            // button2
+            // ProcessTimeLabel
             // 
-            this.button2.Location = new System.Drawing.Point(209, 158);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Ambient Sensor Read";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.ProcessTimeLabel.AutoSize = true;
+            this.ProcessTimeLabel.Location = new System.Drawing.Point(8, 91);
+            this.ProcessTimeLabel.Name = "ProcessTimeLabel";
+            this.ProcessTimeLabel.Size = new System.Drawing.Size(96, 13);
+            this.ProcessTimeLabel.TabIndex = 6;
+            this.ProcessTimeLabel.Text = "Process Time: 0ms";
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 31);
+            this.checkBox1.Enabled = false;
+            this.checkBox1.Location = new System.Drawing.Point(11, 60);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(133, 17);
             this.checkBox1.TabIndex = 1;
             this.checkBox1.Text = "Black Stripe Elliminator";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // RunOnStartup
             // 
             this.RunOnStartup.AutoSize = true;
-            this.RunOnStartup.Location = new System.Drawing.Point(6, 8);
+            this.RunOnStartup.Location = new System.Drawing.Point(11, 37);
             this.RunOnStartup.Name = "RunOnStartup";
             this.RunOnStartup.Size = new System.Drawing.Size(100, 17);
             this.RunOnStartup.TabIndex = 0;
@@ -359,10 +465,11 @@
             // 
             this.buttonSave.Location = new System.Drawing.Point(631, 375);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(62, 46);
+            this.buttonSave.Size = new System.Drawing.Size(62, 47);
             this.buttonSave.TabIndex = 8;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click_1);
             // 
             // panel8
             // 
@@ -652,6 +759,10 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Controls.Add(this.processList);
+            this.tabPage2.Controls.Add(this.MonitorSleepButton);
             this.tabPage2.Controls.Add(this.textBox1);
             this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.panel1);
@@ -663,6 +774,44 @@
             this.tabPage2.Text = "Advanced";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label8.Location = new System.Drawing.Point(12, 17);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(450, 13);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "*This tab is experimental features only. Users, please don\'t try this features, t" +
+    "hey are not stable.";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(14, 72);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(174, 13);
+            this.label7.TabIndex = 20;
+            this.label7.Text = "Process List for Pseudo Full Screen";
+            // 
+            // processList
+            // 
+            this.processList.FormattingEnabled = true;
+            this.processList.Location = new System.Drawing.Point(15, 90);
+            this.processList.Name = "processList";
+            this.processList.Size = new System.Drawing.Size(173, 95);
+            this.processList.TabIndex = 19;
+            // 
+            // MonitorSleepButton
+            // 
+            this.MonitorSleepButton.Location = new System.Drawing.Point(15, 33);
+            this.MonitorSleepButton.Name = "MonitorSleepButton";
+            this.MonitorSleepButton.Size = new System.Drawing.Size(110, 25);
+            this.MonitorSleepButton.TabIndex = 18;
+            this.MonitorSleepButton.Text = "Monitor Sleep";
+            this.MonitorSleepButton.UseVisualStyleBackColor = true;
+            this.MonitorSleepButton.Click += new System.EventHandler(this.MonitorSleepButton_Click);
+            // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(305, 17);
@@ -673,20 +822,20 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(64, 235);
+            this.button1.Location = new System.Drawing.Point(15, 200);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(127, 66);
+            this.button1.Size = new System.Drawing.Size(127, 24);
             this.button1.TabIndex = 16;
-            this.button1.Text = "button1";
+            this.button1.Text = "Display Count:";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.ScreenPanel);
-            this.panel1.Location = new System.Drawing.Point(29, 17);
+            this.panel1.Location = new System.Drawing.Point(17, 240);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(250, 195);
+            this.panel1.Size = new System.Drawing.Size(178, 138);
             this.panel1.TabIndex = 15;
             // 
             // ScreenPanel
@@ -699,6 +848,9 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.textBox4);
+            this.tabPage3.Controls.Add(this.groupBox2);
+            this.tabPage3.Controls.Add(this.groupBox1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -706,6 +858,66 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "About";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // textBox4
+            // 
+            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.textBox4.Location = new System.Drawing.Point(8, 315);
+            this.textBox4.Multiline = true;
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(692, 111);
+            this.textBox4.TabIndex = 2;
+            this.textBox4.Text = resources.GetString("textBox4.Text");
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.textBox3);
+            this.groupBox2.Location = new System.Drawing.Point(485, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(215, 274);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Thanks to Kickstarter Backers";
+            // 
+            // textBox3
+            // 
+            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox3.Location = new System.Drawing.Point(13, 19);
+            this.textBox3.Multiline = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox3.Size = new System.Drawing.Size(195, 249);
+            this.textBox3.TabIndex = 1;
+            this.textBox3.Text = resources.GetString("textBox3.Text");
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Location = new System.Drawing.Point(8, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(249, 274);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Developers";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(15, 21);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
+            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox2.Size = new System.Drawing.Size(230, 247);
+            this.textBox2.TabIndex = 0;
+            this.textBox2.Text = resources.GetString("textBox2.Text");
+            // 
+            // StaticColorTimer
+            // 
+            this.StaticColorTimer.Interval = 500;
+            this.StaticColorTimer.Tick += new System.EventHandler(this.StaticColorTimer_Tick);
             // 
             // Form1
             // 
@@ -753,6 +965,12 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -774,7 +992,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
-        private System.Windows.Forms.ToolStripMenuItem sleepModeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ModeToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Panel panel2;
@@ -813,11 +1031,31 @@
         private System.Windows.Forms.CheckBox RunOnStartup;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ToolStripMenuItem pseudoFullScreenToolStripMenuItem;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.Label ProcessTimeLabel;
+        private System.Windows.Forms.ToolStripMenuItem defaultToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sleepToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem audioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem colorSelectToolStripMenuItem;
+        private System.Windows.Forms.Timer StaticColorTimer;
+        private System.Windows.Forms.Button MonitorSleepButton;
+        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ListBox processList;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ToolStripMenuItem ratioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cinematic21x9ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hD16x9ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fullScreenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem oLDTV4x3ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem onlineMovieThinBarsOnTopbottomToolStripMenuItem;
+        private System.Windows.Forms.Label TransmitTimeLabel;
+        private System.Windows.Forms.ComboBox ComPortCombo;
+        private System.Windows.Forms.Label label9;
 
     }
 }

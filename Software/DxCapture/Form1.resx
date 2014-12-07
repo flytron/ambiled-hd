@@ -121,13 +121,13 @@
     <value>17, 17</value>
   </metadata>
   <metadata name="serialPort1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>104, 17</value>
+    <value>556, 19</value>
   </metadata>
   <metadata name="MyNotifyIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>213, 17</value>
+    <value>145, 15</value>
   </metadata>
   <metadata name="MyContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>334, 17</value>
+    <value>264, 14</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="MyNotifyIcon.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1107,6 +1107,848 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 </value>
   </data>
+  <data name="textBox4.Text" xml:space="preserve">
+    <value>  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with this program.  
+If not, see &lt;http://www.gnu.org/licenses/&gt;.</value>
+  </data>
+  <data name="textBox3.Text" xml:space="preserve">
+    <value>_roken
+Aaron
+Aaron 'Scrapz' Redzik
+Aaron Bertrand
+Aaron Lieberman
+Abdulrahman Alkhatib
+Adam Davis
+Adonis Chrysaphis
+aharon Snyder
+Alan Devine
+Alan Pritchard
+Alasdair Hurst
+Albert Halpin
+Albert Hamika
+Alberto Masa
+Albin Esbjörnsson
+Alex
+Alex Bailey
+Alex Beregszaszi
+Alex Jung
+Alex Pisani
+Alex Zoghlin
+Alexander Demuth
+Ali Alsinan
+Ali Hajia
+Alleyoop
+Ambo100
+Ameet Khara
+Amer Qaiyum
+Ami Wkc
+Amir Rahman
+Ana Stubbs
+andrea
+Andreas Hagemann
+Andreas Hofbauer
+Andreas Lindegren
+Andreas Panayi
+Andrei Olkhovskiy
+Andrejs Zavadskis
+Andrew
+Andrew Cole
+Andrew Greenwood
+Andrew Hile
+Andrew Page
+Andrew Perry
+Andrew Pieniazek
+Andrew Scott
+andrew wood
+Anthony Harmer
+Anton Beerens
+Antony Pearson
+Antti Ryökkynen
+Aren Marcoosi
+Armando Guzman
+Arne
+Arne de Bree
+Arne Schwarck
+arsalan
+Art Friends Production
+Ash Gibbons
+Ashoke Anand
+Ath
+Augustinus Lenz
+Avishai Goldberg
+Avtar Rekhi
+Bach Lau
+badrocklo
+banojuni
+barak katzir
+Barrie McNaught
+Bartek Piorkowski
+Bas Hamer
+Bassam Mokbel
+BEAU BLISS
+Belmiali Sammy
+Ben Banton
+Ben Crosby
+Ben Jaszczak
+Ben Lloyd
+Ben Nahlen
+Ben Schofield
+Benjamin Horneffer
+Bernard Low
+bersi84
+Bertrand Langeac
+Billy K. Hanna
+Binoy Xavier Joy
+Bjoern Lippold
+BJury
+Blue Social Network | Julian Camijn
+Boris Wrubel
+Bot
+brad
+Bram Verdonck
+Brennan Kwa
+Brent Metoxen
+Brett Levy
+Brian Beery
+brian hughes
+Brian Summers
+Brian Wong
+Bryan Maniotakis
+CaffeineJunkie
+Caleb
+Candra M.
+Carl Boulding
+Carl Fleischer
+Carl-Johan Schnell
+Carsten Matzon
+Cary Newfeldt
+Case
+Cathal Gearty
+cdyrssen
+Chahlie
+Charles Fu
+Charles Michaelis
+chaz brown
+Chih-Ling Huang
+choerl
+Chris
+Chris Baker
+Chris Caswell
+Chris Creed
+Chris Feltham
+Chris Furkert
+Chris Harber
+Chris Hide
+Chris Mansfield
+Chris Moore
+Chris Owen
+Chris Wilson
+chrismaddahl
+Christian Börner
+Christian Drake
+Christian Gerbrandt
+Christian Höppner
+Christian Keding
+Christian Otter
+Christian Pfeiffer
+Christian Stephan
+Christine Hamilton-Prime
+Christoffer Holmström
+Christoffer Strömblad
+Christoffer Wallenius
+Christophe Marier
+Christopher Jordan
+Claus1985
+Colin Bowey
+Colin Gallagher
+Colin VanDervoort
+connie leemauk
+Cuddly Tiger
+CyberJacob
+Damian Höhn
+Damien Trinh
+Dan Berry
+Dan Pritchett
+Dan Steeples
+Daniel
+Daniel Bartkowski
+Daniel Collins
+Daniel Gfr Butler
+Daniel Javor
+Daniel Marques
+Daniel Rajal Alonso
+Daniel Robausch
+Daniel Slater
+Daniël
+Danoz
+Daren Kavich
+Darren Rees
+Daryl Pham
+Dave Martin
+David
+David Andersson
+David Burgess
+David Kötterheinrich
+David Ortmann
+David Sailer
+David Salazar
+David Waters
+David Weinstein
+David Whyte
+David Yu
+day
+ddorsett
+Dean
+Dean Mabalot
+Dean Reinhard
+Dean Shorter
+Dennis van der Pool
+Devin Hansen
+Diego
+Diren K Pillaysamoo
+Dirk Krüger
+DirkZ
+Domenico Patania
+Dominic
+Dominik Pich
+Donanl Lutter
+DongYoung Kim
+Doug Tirmenstein
+Dr David Ellis
+Dragonbait
+Duy Nguyen
+dvhawk
+edvin cerimagic
+Edward  Del Grosso
+Edward Koh
+Elgan Jones
+Elias Choong
+Elias Göransson
+Elie Waked
+Eric Goodfellow
+Eric Hicks
+Eric Jonk
+eric nicholas
+Eric Stone
+Erik Bauer
+Espen Iversen
+Exclea Heysen
+Édouard Baladès
+Fabian Fink
+Fabio Pigagnelli
+Fabrice Boutarel
+Faisal Alaskandrani
+Faiz Azmi
+Faleh
+Felix Jankowski
+Felix Just
+Felix Pels
+Fischlustig
+Florian
+Floris Bos
+Fox Buttler
+Francis Xavier Nguyen
+Frank B.
+Frank Fabian
+frank lee
+Frank Oberheim
+Frank Quirk
+Frank Siemers-Suhling
+Fraser
+Fred Fenge
+Frederic Auzon
+Frederick Tang
+Frederyk Weber
+Fredrik Larsson
+Fredrik Olsen
+Fridolin Bach
+Frithjof Fehsenfeld
+G0ldenS4mple
+Gareth Blain
+Gareth Martin
+Gareth McCourt
+Gary Walker
+Gavin Robinson
+Geeurickx
+Gelada
+Geoff Conway(1)
+Geoff Conway(2)
+Georg Kaefer
+Georg Schmeink
+George Wang
+Gethin Davies
+Gilles Dournaux
+Giulio Berti
+Glenn Pallesen
+Goran Highlander
+Grant Ferguson
+greg opolka
+Greg75
+Gregor Lešnik
+Guillaume Deslandes
+Guillaume Meunier
+Gunnar Hollander
+Gustav Wedholm
+Gözde Güçin
+hanuman69
+Hanyu
+Haplo31
+Harrison Barlow
+Harry Wheeler
+Hasan Bajramovic
+Hatchdreams
+hatcyl
+Hayden Steicke
+Helena Thomas
+helgeharder
+Henning Schneider
+hennry
+Henri Laine
+Henric Carlsson
+Henry Tsao
+Hilmi Shah
+Igor Klimer
+Ildar Jarmakov
+Imran MN
+Isaac
+Ivan Bui
+Ivan Skvortsov
+j. faceless user
+J. Gabriella Pellecchia
+Jack Nicoll
+Jacky van den Broek
+Jacques Weijtmans
+Jake
+Jakub Kańczugowski
+James Colalillo
+James Flynn
+James Hensley
+James Hudson
+James Nicholls
+James Sieu
+James Strain
+James Turner
+Jamie Hillin
+Jan
+Jan Patek
+Jan-Hendrik Willms
+Jared
+Jarin Udom
+Jarkko Levealahti
+Jarrett Shrewsbury
+Jarryd Atkinson
+Jasmin Dancause
+Jason
+Jason Cook
+Jason Dunn
+Jason Gillyon
+Jason Millar
+Jasper Kort
+JC
+Jean-Baptiste Riguet
+Jeffrey Allen Anthony Crissman
+Jeffrey Cognard
+Jelle Kouwenhoven
+Jelmer Vorselman
+Jeong Dae Hyun
+Jeremias Kuitunen
+Jeremy
+Jeremy Payn
+Jeroen Egberink
+Jeroen Sander
+Jerold King
+JianDong
+Jim Tanous
+Jimmy
+Jimmy Engström
+Jin
+Jitesh Surana
+JJ Keeling
+Jochen Faißt
+Joel James
+Joel Mickelson
+Johan Daudey
+Johannes Frank
+John
+John Boreczky
+John McGowan
+John Smith
+Jon Anta Hansen
+Jon Dowling
+Jon-Sindre Husum
+Jonathan Babb
+Jonathan Knight
+Jonty Field
+Joongil chung
+Jorgen Kaspick
+Joseph Robinson
+Josh Pearsall
+Josh Shimabukuro
+josh turton
+Joshua Aiken
+Joshua Carlyle
+Joshua Hislop
+Joshua Khoshsefat
+Joshua Leibsly
+Joshua Power
+Joshue
+Jouke
+JT Erickson
+Juan León
+juha k
+Julian
+julian k
+Julien PIEROZZI
+Julien Ricard
+Justin Acosta
+Justin Glambeck
+Justin Suen
+Justin, Evan, and Michal
+Jusufi Shaban
+Jérémie Q.
+KaHo Cheung
+Kai Falkner
+Kailash Arulkumaran
+Kaipo Wong
+kaiserwillhelm
+kanetsu kuri
+Kapah
+Karl Hart
+karuchie
+Kelly Perez
+Kevin
+Kevin
+Kevin Buisson
+kevin duterne
+Kevin Garvey
+Kevin Ngai
+khalid alahmadi
+Kieran Gardiner
+Killerbert
+Kimson Co
+KingOfCheeseLand
+Kirsty Gasston
+Klaas-Bram
+Klaus Hammer
+Kodess R
+kok
+Kolja Kirsch
+Konstantin Root
+Konstantine
+Krzysztof Bzowski
+Kunal KSound Ambasana
+Kyle Troutman
+Kyosume
+Lacc
+Lai Cheong Sang
+Larissa Rüdiger
+Larry Adams
+Lars
+Lee
+Lee Mansfield
+Lee Neale
+Leigh Prather
+Level¹Imp
+Lewis Liu
+Libor Vasa
+Lilian Villette
+Lim Hoon Khai
+Locked
+Lord of all he surveys
+Lorenzo B
+Lot 13 Prophet
+Louis Carlioz
+Louis Jos
+Louis Piet
+lourme
+Lucas
+lucyferror
+Lui Penacho
+Luis Girardi
+Luke
+luke johnson
+Luke Pierce
+Luuk
+Lyle
+M
+mad
+Magnus
+Magnus Borglund
+Magnus Løkkås Ulriksen
+Magnus Wittström
+Mala
+Manuel
+Marc
+Marc Eberhard
+Marc Hon
+Marc Timmermans
+Marco Cutrim
+Marco Pariente-Cohen
+Marco van de Haar
+Marcus Detjen
+Marcus Ilgner
+Mario Oberwalder
+Mark
+Mark Alan Effinger - WebNutrients.com
+mark luhn
+Mark Sampirisi
+Mark Stopher
+Markus Krömer
+Martin Arva
+Martin Fischer
+Martin Hoeflmaier
+Martin Midtgaard
+Martin Rudat
+martin sanderson-hughes
+Matan
+Mathew PAyne
+Mathieu Giguere
+Matt
+Matt Block
+Matt Culverwell
+Matt farmer
+Matt Savage
+Matt Solomon
+Matt West
+Matt Williams
+Matthew Cleary
+Matthew Judkins
+matthew Lasky
+Matthew Parslow
+Matthew Phillipson
+Matthew Tanton
+Matthias Ginster
+Matthias Tempel
+Megan Gaida
+Michael
+Michael Andersen
+Michael Benz
+Michael Bui
+Michael David Wong
+Michael Dieterle
+Michael Frey
+Michael Gibson
+Michael Glambeck
+Michael Hahn
+Michael Holden
+Michael Hurst
+Michael Patey
+Michael Peters
+Michael Xudong Feng
+Michael Yang
+Michel Quindt
+Michiel Meedema
+Miguel Zegarra
+Mikael Nordgren
+Mike
+MIke Nutt
+Mike Wagner
+Mikhail
+Miki
+Mikkel Angaju Rasmussen
+Minh Tran
+Minsc&amp;Boo
+Miranda
+misteradd
+Mitesh Shanbhag
+mobs
+Morgan Marcozzi
+MOTA
+MR K
+mslak
+Muireadach OConnor
+Multi Bob Booth
+Nam Ng
+Nasser Alsafari
+Nathan Chantrell
+Neil Mcfarland
+Neil Merchant
+Neumeier
+Nic Carter
+Nicholas Timperon
+Nicholas Whitcroft
+Nick Higham
+Nick Sanfilippo
+Nico Prucha
+nicodinho
+Nicolaas Vermeulen
+Nicolas Stumpf
+Niek van Oost
+nightmarish5
+Nils Schröter
+Nimesh Nandha
+NKH
+nml.121
+Norm Zastre
+Noé Maillard
+Oleg
+Oliver Hall
+Oliver Schlöbe
+Omar Abushaikha
+Onur Yilmaz
+Oti47
+Overmann
+Pablo Sánchez Gálvez
+Paolo
+Patchphol Asawasomphol
+Patrice Mondor
+Patrick Fiolet
+Patrick Ian Caswell
+Patrick Müller
+Patrick Nadeau
+Patrick Reardon
+Patrick Stam
+Paul F-H
+Paul L
+Paul Luchini
+Paul Murray
+Paul Riley
+Paul Whelan
+Pete Holland
+Pete Leemeijer
+Peter 'Duck' Drake
+Peter Beverloo
+Peter Morvay
+Peter Schnare
+Peter Shatzer
+Peter Simon
+Peter Åslund
+Petr Sedlacek
+PETT Jordan
+Peval Frengol
+Phil Newskooltattoos
+Philipp Buchwald
+Philipp Leu
+Philippe Gackstatter
+Phong
+Phoumany Chanthachack
+Phuong Pham
+PiKay
+pleinolijf
+Plejd
+Prasan Perera
+Pritesh Patel
+Qasim
+R
+r00x
+Rafael Contreras
+Rafael Weiss
+Rainer Stober
+Raj Patel
+Rana Ratanakovit
+Rasmus Kvist Jensen
+Rastislav Švarba
+raven
+Raymon Aroyewun
+Raymond Dai
+RBC
+Reece Crofts
+Reiner Krapf
+Remi Michiels
+Rene Meinhardt
+renepare
+René Vlugt
+reV
+Ricardo Sanchez
+Richard
+Richard Gill
+Richard Nickels
+Richard Prins
+Richard Swain
+Rick Bueneker
+Rico
+Rico Maier
+Rien Matthijsse
+Rob Chatfield
+Rob Felsburg
+Rob Strusz
+Robert
+Robert
+Robert Khoe
+Robert Santiago
+Robert Sprunk
+Robin Schäfer
+Rodja Adolph
+Rodrigo Soltero
+Roger Deng
+Roger Swift
+Ronald Van de Pas
+RonF
+Ronil Bhimjiani
+Roscoe Hart
+Ross Clarkson
+Ross Smith
+Rotem Farkash
+rouxel
+Roy van den Ekker
+RPDC
+Rufus Honour
+Rui Miguel Leston
+Ryan
+Ryan Asanuma
+Ryan Hartzell
+Sam Roache
+Sam Sehnert
+Sam Stevens
+Samaron
+samoan_jo
+Samson Lui
+Samuel Leung
+Samuel van Loggerenberg
+Sangjin Lee
+Schubert Thomas
+Scott Rosales
+Sean Daniel O'Connor
+Sean Finney
+Sean Howell
+Sebastian Ewald
+Sebastian Wenninger
+Sebastien Desplats
+Sedat Kapanoglu
+sekte09
+Seth Seifert
+Sharon
+Shaun Walker
+Shawn Cruikshank
+Shawn Lam
+Shinnosuke Iwaki
+Siegfried Clarke
+Sijmen
+Simeon Cheeseman
+Simeon Ludwell
+Simon Butcher
+Simon Corless
+Simon Walter
+Simone Crisciani
+Sinthorn Xie
+slaveconstruct
+Slawomir
+Sofian Amin
+Sojourn
+SoLongSidekick
+sommet
+Sroaj Sosothikul
+Stefan Dunker
+Steffen Springborn
+Steffen Winter
+Steiner
+Stephan Köhler
+Stephan Loshing
+Stephan Pacht
+Stephane BEUSCH
+Stephen Altemus
+Stephen Huggard
+Stephen Jesse
+Steven Quach
+Steven saward
+Stewart Farquhar
+Stuart Bain
+Sulucion
+superstuper
+Suwaythan Nahaganeshan
+Sven Gärtner
+swissmawi
+Søren Ejvind Jensen
+TAGUET
+Tassilo Schmitt-Fahnert
+Taylor Parrish
+Teddy Melnick
+tetzuo
+Thilo BePunkt
+Thomas Barnaby Fursdon
+Thomas D'hondt
+Thomas Dewar
+Thomas Graf
+Thomas H. Mersmeyer
+Thomas Kramer
+Thomas Luetkenhaus
+thomas murray
+Thomas Staub
+Tim
+Tim Aksu
+Tim Husted
+Tim Johnston
+Tim Sommer
+Timothy Dixon
+Timothy Low
+Tinylogics
+TLOS
+Tobias
+Toby Ho
+Tom
+Tom Clark
+Tom Knowles
+tom mukalian
+Tom Still
+Tomas Halgas
+Tomer Nassi
+Tomer Ohana
+Tony Noel
+Tony Reardon
+Torry Hop
+Trevor Figueira
+Trevor Kauf
+Trey Gammon
+Tristan
+Troy West
+Tyhr Trubiak
+Tyler Herrick
+Ucheltmel Carlson
+Velocity
+Vibhor Chowdhary
+Victor Boutani
+Victor Kasprzak
+Victor Tobies
+Vince Leong
+Vincent Azara
+Vincent van Lien
+Vittorio Conza
+Vlad Roman
+VOLTZ Eric
+VOON BUANG AIN
+Vy Huynh
+Weavus
+Wei Wei Cho
+weiren.
+WhiteKnight
+Will Elstone
+Will Stevens
+William Clay
+William Joyce
+William Leacock
+WolfKaktus75
+Xander Hoose
+Yannick Ittner
+Yannik Mündler
+Yevgeniy Vishnevskiy
+Yshaana
+Yuwei Heng
+Zalphab
+Ziad Kazak
+Ziad Rouhana</value>
+  </data>
+  <data name="textBox2.Text" xml:space="preserve">
+    <value>INOVATEK ELECTRONICS TEAM
+-------------------------------------------
+Melih Karakelle
+Bora Acar
+
+SOFTWARE DEVELOPERS
+-------------------------------------------
+Melih Karakelle
+&lt;type your name here&gt;
+
+PROJECT PAGE
+-------------------------------------------
+https://code.google.com/p/ambiled-hd/</value>
+  </data>
+  <metadata name="StaticColorTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>424, 18</value>
+  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAAAAAAAEAGABfewAAZgAAAEBAAAABABgAKDIAAMV7AAAwMAAAAQAYAKgcAADtrQAAICAAAAEA
