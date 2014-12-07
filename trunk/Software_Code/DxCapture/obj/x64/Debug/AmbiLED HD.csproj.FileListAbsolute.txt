@@ -1,0 +1,15 @@
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\bin\x64\Debug\AmbiLED_HD.exe.config
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\bin\x64\Debug\AmbiLED_HD.exe.manifest
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\bin\x64\Debug\AmbiLED_HD.application
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\bin\x64\Debug\AmbiLED_HD.exe
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\bin\x64\Debug\AmbiLED_HD.pdb
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\x64\Debug\ResolveAssemblyReference.cache
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\x64\Debug\DxCapture.Form1.resources
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\x64\Debug\AmbiLED_HD.Properties.Resources.resources
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\x64\Debug\ResGen.read.1.tlog
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\x64\Debug\ResGen.write.1.tlog
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\x64\Debug\AmbiLED_HD.TrustInfo.xml
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\x64\Debug\AmbiLED_HD.exe.manifest
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\x64\Debug\AmbiLED_HD.application
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\x64\Debug\AmbiLED_HD.exe
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\x64\Debug\AmbiLED_HD.pdb

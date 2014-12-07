@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="DxCapture">
+</Property><Property Name="Solution File" Value="D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\DxCapture.sln">
+</Property><Property Name="User Options File" Value="D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\DxCapture.suo">
+</Property><Property Name="Date" Value="Thursday, August 07, 2014">
+</Property><Property Name="Time" Value="21:24 PM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="DxCapture.sln" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture.sln">
+</Event><Event ErrorLevel="0" Project="" Source="DxCapture.suo" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture.suo">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\DxCapture.csproj" Description="Project file successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\DxCapture.csproj">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\DxCapture.csproj.user" Description="Project user file successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\DxCapture.csproj.user">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\DxScreenCapture.cs" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\DxScreenCapture.cs">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\Form1.cs" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\Form1.cs">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\Form1.Designer.cs" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\Form1.Designer.cs">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\ini.cs" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\ini.cs">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\Program.cs" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\Program.cs">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\Properties\Resources.Designer.cs" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\Properties\Resources.Designer.cs">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\Properties\Settings.Designer.cs" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\Properties\Settings.Designer.cs">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\App.config" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\App.config">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\Properties\Settings.settings" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\Properties\Settings.settings">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\Resources\MyNotifyIcon.Icon.ico" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\Resources\MyNotifyIcon.Icon.ico">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\LCD Monitor copy3.ico" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\LCD Monitor copy3.ico">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\Form1.resx" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\Form1.resx">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\Properties\Resources.resx" Description="File successfully backed up as D:\FLYTRON_Projects\Ambilight\AmbiLED_Driver_Software\Backup\DxCapture\Properties\Resources.resx">
+</Event><Event ErrorLevel="0" Project="DxCapture" Source="DxCapture\DxCapture.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="DxCapture" Source="DxCapture\DxCapture.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="" Source="DxCapture.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="DxCapture.sln" Description="Converted">
+</Event></UpgradeLog>
