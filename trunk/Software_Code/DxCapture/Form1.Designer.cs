@@ -151,8 +151,6 @@
             this.MyNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("MyNotifyIcon.Icon")));
             this.MyNotifyIcon.Text = "AmbiLED HD";
             this.MyNotifyIcon.Visible = true;
-            this.MyNotifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
-            this.MyNotifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
             // 
             // MyContextMenuStrip
             // 
@@ -331,7 +329,6 @@
             this.pseudoFullScreenToolStripMenuItem.Name = "pseudoFullScreenToolStripMenuItem";
             this.pseudoFullScreenToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.pseudoFullScreenToolStripMenuItem.Text = "Pseudo Full Screen";
-            this.pseudoFullScreenToolStripMenuItem.Click += new System.EventHandler(this.pseudoFullScreenToolStripMenuItem_Click_1);
             // 
             // showSettingsToolStripMenuItem
             // 
@@ -374,7 +371,6 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Main Settings";
             this.tabPage4.UseVisualStyleBackColor = true;
-            this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
             // 
             // label9
             // 
