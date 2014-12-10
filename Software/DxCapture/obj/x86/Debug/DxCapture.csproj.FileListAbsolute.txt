@@ -1,9 +1,0 @@
-D:\FLYTRON_Projects\Ambilight\DX_Capture\DxCapture\bin\Debug\DxCapture.exe.config
-D:\FLYTRON_Projects\Ambilight\DX_Capture\DxCapture\obj\x86\Debug\ResolveAssemblyReference.cache
-D:\FLYTRON_Projects\Ambilight\DX_Capture\DxCapture\obj\x86\Debug\DxCapture.Form1.resources
-D:\FLYTRON_Projects\Ambilight\DX_Capture\DxCapture\obj\x86\Debug\DxCapture.Properties.Resources.resources
-D:\FLYTRON_Projects\Ambilight\DX_Capture\DxCapture\obj\x86\Debug\DxCapture.csproj.GenerateResource.Cache
-D:\FLYTRON_Projects\Ambilight\DX_Capture\DxCapture\bin\Debug\DxCapture.exe
-D:\FLYTRON_Projects\Ambilight\DX_Capture\DxCapture\bin\Debug\DxCapture.pdb
-D:\FLYTRON_Projects\Ambilight\DX_Capture\DxCapture\obj\x86\Debug\DxCapture.exe
-D:\FLYTRON_Projects\Ambilight\DX_Capture\DxCapture\obj\x86\Debug\DxCapture.pdb

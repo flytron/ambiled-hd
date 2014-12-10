@@ -754,20 +754,7 @@ namespace AmbiLED
         }
         /// END POWER SET
 
-        private void topLeft_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
-
-        private void top_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -787,14 +774,7 @@ namespace AmbiLED
             }
         }
 
-        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-        }
 
-        private void Start_Timer_Tick(object sender, EventArgs e)
-        {
-
-        }
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -864,27 +844,13 @@ namespace AmbiLED
         }
 
 
-        private void runOnStartupToolStripMenuItem_Click(object sender, EventArgs e)
-        {
 
-
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void numericUpDown6_ValueChanged(object sender, EventArgs e)
         {
             Gap_Textbox.Text = UpDown_Gap.Value.ToString();
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
@@ -962,22 +928,7 @@ namespace AmbiLED
             
         }
 
-        private void tabPage4_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void buttonSave_Click(object sender, EventArgs e)
-        {
-
-            
-
-        }
 
         private void UpDown_BottomRight_ValueChanged(object sender, EventArgs e)
         {
@@ -1033,20 +984,7 @@ namespace AmbiLED
             CaptureTimer.Enabled = true; //timer enable again
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            
-        }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void pseudoFullScreenToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-
-        }
 
 
         private void defaultToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1071,10 +1009,7 @@ namespace AmbiLED
             mode_select(4);
         }
 
-        private void wideToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
+  
 
         private void StaticColorTimer_Tick(object sender, EventArgs e)
         {
