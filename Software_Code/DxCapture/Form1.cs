@@ -138,6 +138,10 @@ namespace AmbiLED
         int FRAME_LED_BOTTOM_RIGHT = 5;
         int FRAME_LED_GAP = 0;
         int TOTAL_LED_COUNT = 40;
+
+        int Monitor_Width = 300; 
+        int Monitor_Height = 200;
+
         //-------------------------------------------------------
 
         /*
@@ -389,12 +393,23 @@ namespace AmbiLED
 
         }
 
-        void Set_LED_Positions(int Left_Right_Space = 8, int Up_Down_Space = 8 )
+        void Set_LED_Positions(int Left_Right_Space = 8, int Up_Down_Space = 8, string Monitor_Mode = "2D" )
         {
             int o = 2;// ((Screen.PrimaryScreen.Bounds.Width + Screen.PrimaryScreen.Bounds.Height) * 2) / (led_adet * 10);
             //int m = 8;
             int Screen_Width =  Screen.PrimaryScreen.Bounds.Width; //SystemInformation.VirtualScreen.Width; 
             int Screen_Height = Screen.PrimaryScreen.Bounds.Height; //SystemInformation.VirtualScreen.Height; 
+
+            switch (Monitor_Mode) // monitor modes
+            {
+                case "2D": Screen_Width = Screen_Width ; break; //default
+                case "3D": Screen_Width = Screen_Width / 2; break; //side by side 3D
+                case "DUAL": Screen_Width = Screen_Width * 2; break; //Dual monitor
+            }
+            Monitor_Width = Screen_Width;
+            Monitor_Height = Screen_Height;
+
+            
             int sx = Screen_Width - Left_Right_Space;
             int sy = Screen_Height - Up_Down_Space;
 
@@ -455,7 +470,7 @@ namespace AmbiLED
         
         }
 
-        void SET_Ratio(int Xratio, int Yratio)
+        void SET_Ratio(int Xratio, int Yratio, string Monitor_Mode = "2D")
         {
 
             int w = Screen.PrimaryScreen.Bounds.Width;
@@ -472,15 +487,14 @@ namespace AmbiLED
             else
                 blank_space2 = (w - w2) / 2;
 
-            Set_LED_Positions(blank_space2 + 8, blank_space + 8); //Set the blank spaces
+            Set_LED_Positions(blank_space2 + 8, blank_space + 8, Monitor_Mode); //Set the blank spaces
         }
 
         void Calculate()
         {
 
-            
-            Rectangle bounds = Screen.GetBounds(Screen.GetBounds(Point.Empty));
-            //bounds.Width = bounds.Width * 2;
+
+            Rectangle bounds = new Rectangle(0, 0, Monitor_Width, Monitor_Height);
            
 
             Point[] stripPos_array = new Point[stripPos.Count] ;
@@ -1122,6 +1136,20 @@ namespace AmbiLED
                 quitToolStripMenuItem.PerformClick();
             }
 
+        }
+
+        private void dVideoSideBySideToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int w = Screen.PrimaryScreen.Bounds.Width;
+            int h = Screen.PrimaryScreen.Bounds.Height;
+            SET_Ratio(w, h, "3D");
+        }
+
+        private void dualMonitorSideBySideToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int w = Screen.PrimaryScreen.Bounds.Width;
+            int h = Screen.PrimaryScreen.Bounds.Height;
+            SET_Ratio(w, h, "DUAL");
         }
 
 

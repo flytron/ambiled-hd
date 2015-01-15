@@ -109,6 +109,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.StaticColorTimer = new System.Windows.Forms.Timer(this.components);
+            this.dVideoSideBySideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dualMonitorSideBySideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MyContextMenuStrip.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -162,7 +164,7 @@
             this.showSettingsToolStripMenuItem,
             this.quitToolStripMenuItem});
             this.MyContextMenuStrip.Name = "contextMenuStrip1";
-            this.MyContextMenuStrip.Size = new System.Drawing.Size(174, 136);
+            this.MyContextMenuStrip.Size = new System.Drawing.Size(174, 158);
             this.MyContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // lightLevelToolStripMenuItem
@@ -244,7 +246,9 @@
             this.cinematic21x9ToolStripMenuItem,
             this.hD16x9ToolStripMenuItem,
             this.oLDTV4x3ToolStripMenuItem,
-            this.onlineMovieThinBarsOnTopbottomToolStripMenuItem});
+            this.onlineMovieThinBarsOnTopbottomToolStripMenuItem,
+            this.dVideoSideBySideToolStripMenuItem,
+            this.dualMonitorSideBySideToolStripMenuItem});
             this.ratioToolStripMenuItem.Name = "ratioToolStripMenuItem";
             this.ratioToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.ratioToolStripMenuItem.Text = "Aspect Ratio";
@@ -288,8 +292,8 @@
             // 
             this.ModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.defaultToolStripMenuItem,
-            this.sleepToolStripMenuItem,
             this.colorSelectToolStripMenuItem,
+            this.sleepToolStripMenuItem,
             this.audioToolStripMenuItem});
             this.ModeToolStripMenuItem.Name = "ModeToolStripMenuItem";
             this.ModeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
@@ -298,21 +302,21 @@
             // defaultToolStripMenuItem
             // 
             this.defaultToolStripMenuItem.Name = "defaultToolStripMenuItem";
-            this.defaultToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.defaultToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.defaultToolStripMenuItem.Text = "Default";
             this.defaultToolStripMenuItem.Click += new System.EventHandler(this.defaultToolStripMenuItem_Click);
             // 
             // sleepToolStripMenuItem
             // 
             this.sleepToolStripMenuItem.Name = "sleepToolStripMenuItem";
-            this.sleepToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.sleepToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.sleepToolStripMenuItem.Text = "Sleep";
             this.sleepToolStripMenuItem.Click += new System.EventHandler(this.sleepToolStripMenuItem_Click);
             // 
             // colorSelectToolStripMenuItem
             // 
             this.colorSelectToolStripMenuItem.Name = "colorSelectToolStripMenuItem";
-            this.colorSelectToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.colorSelectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.colorSelectToolStripMenuItem.Text = "Color Select";
             this.colorSelectToolStripMenuItem.Click += new System.EventHandler(this.colorSelectToolStripMenuItem_Click);
             // 
@@ -320,7 +324,7 @@
             // 
             this.audioToolStripMenuItem.Enabled = false;
             this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
-            this.audioToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.audioToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.audioToolStripMenuItem.Text = "Audio";
             this.audioToolStripMenuItem.Click += new System.EventHandler(this.audioToolStripMenuItem_Click);
             // 
@@ -915,6 +919,20 @@
             this.StaticColorTimer.Interval = 500;
             this.StaticColorTimer.Tick += new System.EventHandler(this.StaticColorTimer_Tick);
             // 
+            // dVideoSideBySideToolStripMenuItem
+            // 
+            this.dVideoSideBySideToolStripMenuItem.Name = "dVideoSideBySideToolStripMenuItem";
+            this.dVideoSideBySideToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
+            this.dVideoSideBySideToolStripMenuItem.Text = "3D Video (Side By Side)";
+            this.dVideoSideBySideToolStripMenuItem.Click += new System.EventHandler(this.dVideoSideBySideToolStripMenuItem_Click);
+            // 
+            // dualMonitorSideBySideToolStripMenuItem
+            // 
+            this.dualMonitorSideBySideToolStripMenuItem.Name = "dualMonitorSideBySideToolStripMenuItem";
+            this.dualMonitorSideBySideToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
+            this.dualMonitorSideBySideToolStripMenuItem.Text = "Dual Monitor (Side By Side)";
+            this.dualMonitorSideBySideToolStripMenuItem.Click += new System.EventHandler(this.dualMonitorSideBySideToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1052,6 +1070,8 @@
         private System.Windows.Forms.Label TransmitTimeLabel;
         private System.Windows.Forms.ComboBox ComPortCombo;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ToolStripMenuItem dVideoSideBySideToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dualMonitorSideBySideToolStripMenuItem;
 
     }
 }
