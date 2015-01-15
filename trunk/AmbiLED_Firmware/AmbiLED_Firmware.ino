@@ -23,7 +23,11 @@ byte R_previous = 0;
 byte G_previous = 0;
 byte B_previous = 0;
 byte isSleep = 0;
+#if defined(DoublePixels)
+byte big_screen = 1;
+#else
 byte big_screen = 0;
+#endif
 int color_sensor_counter=0;
 
 unsigned long lastByteTime, t;
@@ -60,16 +64,13 @@ void ISR_INT1()
 }
 
 void loop() {
-
+  
+  
   t = millis(); //Time Data
-  
-  
   if (Serial.available()>0)    // Serial command received from the PC
                         {
                           
                           int cmd = Serial.read();
-                          
-                          
                           if (cmd>250) 
                             commands(cmd);
                           else              
@@ -162,7 +163,11 @@ void commands(byte cmd)
           strip.show();
           isSleep=0;
           bi=0; 
-          big_screen = 0;
+          #if defined(DoublePixels)
+             big_screen = 1;
+          #else
+             big_screen = 0;
+          #endif
           break;
         case 254:// SET LEDs 2x for big screens
           strip.show();

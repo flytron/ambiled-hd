@@ -13,3 +13,7 @@
 #define S2 A2
 #define S3 A3
 
+// Double pixel for more than 255 pixel strips
+//#define DoublePixels
+
+
