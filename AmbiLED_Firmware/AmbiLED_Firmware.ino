@@ -11,7 +11,12 @@
 //   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(total_led_support, PIN, NEO_GRB + NEO_KHZ800);
+#if defined(ShortStrip)
+    Adafruit_NeoPixel strip = Adafruit_NeoPixel(256, PIN, NEO_GRB + NEO_KHZ800);
+#else
+    Adafruit_NeoPixel strip = Adafruit_NeoPixel(total_led_support, PIN, NEO_GRB + NEO_KHZ800);
+#endif
+
 
 int bi = 0;
 int i = 0;

@@ -49,16 +49,19 @@
             this.hD16x9ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oLDTV4x3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.onlineMovieThinBarsOnTopbottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dVideoSideBySideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dualMonitorSideBySideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sleepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sleepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.audioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pseudoFullScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.ComPortCombo = new System.Windows.Forms.ComboBox();
             this.TransmitTimeLabel = new System.Windows.Forms.Label();
@@ -109,8 +112,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.StaticColorTimer = new System.Windows.Forms.Timer(this.components);
-            this.dVideoSideBySideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dualMonitorSideBySideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MyContextMenuStrip.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -164,7 +165,7 @@
             this.showSettingsToolStripMenuItem,
             this.quitToolStripMenuItem});
             this.MyContextMenuStrip.Name = "contextMenuStrip1";
-            this.MyContextMenuStrip.Size = new System.Drawing.Size(174, 158);
+            this.MyContextMenuStrip.Size = new System.Drawing.Size(174, 136);
             this.MyContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // lightLevelToolStripMenuItem
@@ -288,6 +289,20 @@
             this.onlineMovieThinBarsOnTopbottomToolStripMenuItem.Text = "Online Movie - Thin bars on top && bottom";
             this.onlineMovieThinBarsOnTopbottomToolStripMenuItem.Click += new System.EventHandler(this.onlineMovieThinBarsOnTopbottomToolStripMenuItem_Click);
             // 
+            // dVideoSideBySideToolStripMenuItem
+            // 
+            this.dVideoSideBySideToolStripMenuItem.Name = "dVideoSideBySideToolStripMenuItem";
+            this.dVideoSideBySideToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
+            this.dVideoSideBySideToolStripMenuItem.Text = "3D Video (Side By Side)";
+            this.dVideoSideBySideToolStripMenuItem.Click += new System.EventHandler(this.dVideoSideBySideToolStripMenuItem_Click);
+            // 
+            // dualMonitorSideBySideToolStripMenuItem
+            // 
+            this.dualMonitorSideBySideToolStripMenuItem.Name = "dualMonitorSideBySideToolStripMenuItem";
+            this.dualMonitorSideBySideToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
+            this.dualMonitorSideBySideToolStripMenuItem.Text = "Dual Monitor (Side By Side)";
+            this.dualMonitorSideBySideToolStripMenuItem.Click += new System.EventHandler(this.dualMonitorSideBySideToolStripMenuItem_Click);
+            // 
             // ModeToolStripMenuItem
             // 
             this.ModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -302,29 +317,29 @@
             // defaultToolStripMenuItem
             // 
             this.defaultToolStripMenuItem.Name = "defaultToolStripMenuItem";
-            this.defaultToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.defaultToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.defaultToolStripMenuItem.Text = "Default";
             this.defaultToolStripMenuItem.Click += new System.EventHandler(this.defaultToolStripMenuItem_Click);
-            // 
-            // sleepToolStripMenuItem
-            // 
-            this.sleepToolStripMenuItem.Name = "sleepToolStripMenuItem";
-            this.sleepToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.sleepToolStripMenuItem.Text = "Sleep";
-            this.sleepToolStripMenuItem.Click += new System.EventHandler(this.sleepToolStripMenuItem_Click);
             // 
             // colorSelectToolStripMenuItem
             // 
             this.colorSelectToolStripMenuItem.Name = "colorSelectToolStripMenuItem";
-            this.colorSelectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.colorSelectToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.colorSelectToolStripMenuItem.Text = "Color Select";
             this.colorSelectToolStripMenuItem.Click += new System.EventHandler(this.colorSelectToolStripMenuItem_Click);
+            // 
+            // sleepToolStripMenuItem
+            // 
+            this.sleepToolStripMenuItem.Name = "sleepToolStripMenuItem";
+            this.sleepToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.sleepToolStripMenuItem.Text = "Sleep";
+            this.sleepToolStripMenuItem.Click += new System.EventHandler(this.sleepToolStripMenuItem_Click);
             // 
             // audioToolStripMenuItem
             // 
             this.audioToolStripMenuItem.Enabled = false;
             this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
-            this.audioToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.audioToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.audioToolStripMenuItem.Text = "Audio";
             this.audioToolStripMenuItem.Click += new System.EventHandler(this.audioToolStripMenuItem_Click);
             // 
@@ -362,6 +377,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.button2);
             this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Controls.Add(this.ComPortCombo);
             this.tabPage4.Controls.Add(this.TransmitTimeLabel);
@@ -375,6 +391,17 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Main Settings";
             this.tabPage4.UseVisualStyleBackColor = true;
+            this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(11, 138);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(191, 23);
+            this.button2.TabIndex = 11;
+            this.button2.Text = "Open Config.ini file";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label9
             // 
@@ -747,15 +774,7 @@
             this.BottomRight_Textbox.Size = new System.Drawing.Size(31, 20);
             this.BottomRight_Textbox.TabIndex = 1;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::AmbiLED_HD.Properties.Resources.d630_032;
-            this.pictureBox1.Location = new System.Drawing.Point(75, 40);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(549, 382);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+
             // 
             // tabPage2
             // 
@@ -919,20 +938,6 @@
             this.StaticColorTimer.Interval = 500;
             this.StaticColorTimer.Tick += new System.EventHandler(this.StaticColorTimer_Tick);
             // 
-            // dVideoSideBySideToolStripMenuItem
-            // 
-            this.dVideoSideBySideToolStripMenuItem.Name = "dVideoSideBySideToolStripMenuItem";
-            this.dVideoSideBySideToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
-            this.dVideoSideBySideToolStripMenuItem.Text = "3D Video (Side By Side)";
-            this.dVideoSideBySideToolStripMenuItem.Click += new System.EventHandler(this.dVideoSideBySideToolStripMenuItem_Click);
-            // 
-            // dualMonitorSideBySideToolStripMenuItem
-            // 
-            this.dualMonitorSideBySideToolStripMenuItem.Name = "dualMonitorSideBySideToolStripMenuItem";
-            this.dualMonitorSideBySideToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
-            this.dualMonitorSideBySideToolStripMenuItem.Text = "Dual Monitor (Side By Side)";
-            this.dualMonitorSideBySideToolStripMenuItem.Click += new System.EventHandler(this.dualMonitorSideBySideToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1072,6 +1077,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ToolStripMenuItem dVideoSideBySideToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dualMonitorSideBySideToolStripMenuItem;
+        private System.Windows.Forms.Button button2;
 
     }
 }

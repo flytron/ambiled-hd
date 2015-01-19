@@ -50,6 +50,7 @@ namespace AmbiLED
         private List<string> processCache = new List<string>();
 
 
+        public Color ColorSetValue { get; set; }
 
         public struct RECT
         {
@@ -210,7 +211,7 @@ namespace AmbiLED
             }
          catch (Exception ex)
             {
-                MessageBox.Show("Whoops! AmbiLED HD cannot working.\n\n" + ex.ToString());
+                MessageBox.Show("Whoops! We have a problem!\n\n" + ex.ToString());
             }
         }
 
@@ -425,7 +426,7 @@ namespace AmbiLED
 
 
             int bottom_right_length = (int)((Screen_Width-(2*Left_Right_Space))* (((float)FRAME_LED_BOTTOM_RIGHT / (float)(FRAME_LED_BOTTOM_LEFT + FRAME_LED_GAP + FRAME_LED_BOTTOM_RIGHT))));
-            y = sy;//Sağ alttan sol alta
+            y = sy;//Right Bottom to Left Bottom
             for (x = bottom_right_length+1; x > 1; x -= o)
             {
                 pos.X = x;
@@ -433,7 +434,7 @@ namespace AmbiLED
                 stripPos.Add(pos);
             }
 
-            x = Left_Right_Space;//sol alttan sol üste
+            x = Left_Right_Space;//Left Bottom to Left Top
             for (y = Screen_Height - 1; y >  1; y -= o)
             {
                 pos.X = x;
@@ -441,7 +442,7 @@ namespace AmbiLED
                 stripPos.Add(pos);
             }
 
-            y = Up_Down_Space; //sol ustten sağ üste
+            y = Up_Down_Space; //Left Top to Right Top
             for (x = 1; x < Screen_Width-1; x += o)
             {
                 pos.X = x;
@@ -449,7 +450,7 @@ namespace AmbiLED
                 stripPos.Add(pos);
             }
 
-            x = sx; //sağ usten sağ alta
+            x = sx; //Right Top to Right Bottom
             for (y = 1; y < Screen_Height - 1; y += o)
             {
                 pos.X = x;
@@ -458,7 +459,7 @@ namespace AmbiLED
             }
 
             int bottom_left_length = (int)((Screen_Width - (2 * Left_Right_Space)) * (((float)FRAME_LED_BOTTOM_LEFT / (float)(FRAME_LED_BOTTOM_LEFT + FRAME_LED_GAP + FRAME_LED_BOTTOM_RIGHT))));
-            y = sy;//Sağ alttan sol alta
+            y = sy;//Right Bottom to LEft Bottom
             for (x = Screen_Width - 1; x > Screen_Width - bottom_left_length; x -= o)
             {
                 pos.X = x;
@@ -594,7 +595,7 @@ namespace AmbiLED
                     CaptureTimer.Enabled = false;
                     StaticColorTimer.Enabled = true;
                     colorSelectToolStripMenuItem.Checked = true;
-
+                    /*
                     ColorDialog colorDialog1 = new ColorDialog();
                     colorDialog1.AllowFullOpen = true;
                     colorDialog1.FullOpen = true;
@@ -622,6 +623,7 @@ namespace AmbiLED
                         if ((SerialPortName != "COM0") && (Monitor_Sleeping == false))
                             serialPort1.Write(COM_Tx_Buffer, 0, (512 * 3) + 3);
                     }
+                     */
                     break;
                 default:
                     
@@ -1020,6 +1022,8 @@ namespace AmbiLED
 
         private void colorSelectToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ColorForm frm = new ColorForm();
+            frm.Show();
             mode_select(4);
         }
 
@@ -1027,8 +1031,23 @@ namespace AmbiLED
 
         private void StaticColorTimer_Tick(object sender, EventArgs e)
         {
+            byte R = GlobalVars.ColorSelectValueR ;
+            byte G = GlobalVars.ColorSelectValueG;
+            byte B = GlobalVars.ColorSelectValueB;
+
+
+            for (int i = 0; i < 512; i++)
+            {
+                COM_Tx_Buffer[(i * 3) + 1] = (byte)(R >> 2); // divide 2
+                COM_Tx_Buffer[(i * 3) + 2] = (byte)(G >> 2);
+                COM_Tx_Buffer[(i * 3) + 3] = (byte)(B >> 2);
+            }
+            COM_Tx_Buffer[512 * 3] = (byte)255; //SHOW 
+            StaticColorBuffer = COM_Tx_Buffer;
             if ((SerialPortName != "COM0") && (Monitor_Sleeping == false))
-                serialPort1.Write(StaticColorBuffer, 0, (512 * 3) + 3);
+                serialPort1.Write(COM_Tx_Buffer, 0, (512 * 3) + 3);
+            
+
         }
 
         private void buttonSave_Click_1(object sender, EventArgs e)
@@ -1150,6 +1169,16 @@ namespace AmbiLED
             int w = Screen.PrimaryScreen.Bounds.Width;
             int h = Screen.PrimaryScreen.Bounds.Height;
             SET_Ratio(w, h, "DUAL");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Process.Start("notepad.exe", Application.StartupPath + @"\\config.ini");
+        }
+
+        private void tabPage4_Click(object sender, EventArgs e)
+        {
+
         }
 
 
