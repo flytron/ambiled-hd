@@ -16,4 +16,7 @@
 // Double pixel for more than 255 pixel strips
 //#define DoublePixels
 
+// Fast LED color setting for shorter than 255 pixel strips
+#define ShortStrip
+
 
