@@ -26,3 +26,4 @@ E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Debug\Ambi
 E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Debug\AmbiLED_HD.application
 E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Debug\AmbiLED_HD.exe
 E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Debug\AmbiLED_HD.pdb
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Debug\AmbiLED HD.csprojResolveAssemblyReference.cache

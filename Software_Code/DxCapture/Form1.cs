@@ -31,7 +31,7 @@ namespace AmbiLED
         const int WM_POWERBROADCAST = 0x218;
         const int SC_MONITORPOWER = 0xf170;
         const int PBT_POWERSETTINGCHANGE = 0x8013;
-        #region Win32 calls
+        //#region Win32 calls
         struct POWERBROADCAST_SETTING { public Guid PowerSetting; public UInt32 DataLength; public byte Data; }
 
         [DllImport(@"User32", SetLastError = true, EntryPoint = "RegisterPowerSettingNotification", CallingConvention = CallingConvention.StdCall)]
@@ -40,8 +40,19 @@ namespace AmbiLED
         [DllImport("user32.dll")]
         private static extern int SendMessage(int hWnd, int hMsg, int wParam, int lParam);
 
-        #endregion
+        [DllImport("user32.dll")]
+        static extern int GetForegroundWindow();
+
+       // #endregion
         //----------END - MONITOR SLEEP DETECTION-------------
+
+        //------ AERO Enamble/Disbale ----------
+        public readonly uint DWM_EC_DISABLECOMPOSITION = 0;
+        public readonly uint DWM_EC_ENABLECOMPOSITION = 1;
+        [DllImport("dwmapi.dll", EntryPoint = "DwmEnableComposition")]
+        protected extern static uint Win32DwmEnableComposition(uint uCompositionAction);
+        //------ END - AERO Enamble/Disbale ----------
+        
 
 
         ///     list of useless processes
@@ -94,6 +105,7 @@ namespace AmbiLED
         //-------------------------------------------------------
 
         KeyboardHook hook = new KeyboardHook();
+        KeyboardHook hook_Pseudo_FullScreen = new KeyboardHook();
 
         /*
         //------ HOT KEY DLLs------------------------------------
@@ -131,6 +143,11 @@ namespace AmbiLED
         string SerialPortName = "COM0";
 
         Boolean Monitor_Sleeping = false;
+        Boolean Black_Stripe_Eliminator = false;
+        Boolean Black_Stripe_Detected = false;
+        int Black_Stripe_Threshold = 30;
+        int BSD_i = 0;
+        int BSD_width = 0;
 
         int FRAME_LED_LEFT = 10;
         int FRAME_LED_TOP = 10;
@@ -139,6 +156,10 @@ namespace AmbiLED
         int FRAME_LED_BOTTOM_RIGHT = 5;
         int FRAME_LED_GAP = 0;
         int TOTAL_LED_COUNT = 40;
+
+        int HOTKEY_PSEUDO_FULL_SCREEN = 122;
+        int HOTKEY_SET_RATIO = 123;
+
 
         int Monitor_Width = 300; 
         int Monitor_Height = 200;
@@ -171,6 +192,7 @@ namespace AmbiLED
 
 
         Collection<Point> stripPos = new Collection<Point>();
+        Collection<int> Black_Stripe_Pos = new Collection<int>();
         Collection<System.Drawing.Color> stripColor = new Collection<System.Drawing.Color>();
 
         const int Bpp = 4;
@@ -184,34 +206,12 @@ namespace AmbiLED
             Read_Ini_File();
             Set_LED_Positions();
 
-            // register the event that is fired after the key press.
-            hook.KeyPressed += new EventHandler<KeyPressedEventArgs>(hook_KeyPressed);
-            // register the control + alt + F12 combination as hot key.
-            hook.RegisterHotKey(AmbiLED_HD.ModifierKeys.Control | AmbiLED_HD.ModifierKeys.Alt, Keys.F12);
 
-            //RegisterHotKey(this.Handle, 0, (int)KeyModifier.Shift + (int)KeyModifier.Alt, Keys.P.GetHashCode());
             
-            /*
-            float gamma_R = (float) 0.45;
-            float gamma_G = (float) 0.45;
-            float gamma_B = (float) 0.45;
-            //GAMMA Düzeltmesi
-            for (int i = 0; i < 256; ++i)
-            {
-                RedRamp[i] = (byte)Math.Min(255, (int)((255.0 * Math.Pow(i / 255.0, 1.0 / gamma_R)) + 0.5));
-                GreenRamp[i] = (byte)Math.Min(255, (int)((255.0 * Math.Pow(i / 255.0, 1.0 / gamma_G)) + 0.5));
-                BlueRamp[i] = (byte)Math.Min(255, (int)((255.0 * Math.Pow(i / 255.0, 1.0 / gamma_B)) + 0.5));
-                textBox2.Text = textBox2.Text + "," + BlueRamp[i].ToString();
-
-            }  
-            */
-
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (rk.GetValue("AmbiLED") != null) RunOnStartup.Checked = true;
             }
          catch (Exception ex)
             {
-                MessageBox.Show("Whoops! We have a problem!\n\n" + ex.ToString());
+                //MessageBox.Show("Whoops! We have a problem!\n\n" + ex.ToString());
             }
         }
 
@@ -228,7 +228,15 @@ namespace AmbiLED
                     Application.Exit();
                 }
 
+                // register the event that is fired after the key press.
+                hook.KeyPressed += new EventHandler<KeyPressedEventArgs>(hook_KeyPressed);
+                // register the control + alt + F12 combination as hot key.
+                hook.RegisterHotKey(AmbiLED_HD.ModifierKeys.Control | AmbiLED_HD.ModifierKeys.Alt, (Keys)HOTKEY_SET_RATIO);
+                   
+                hook.RegisterHotKey(AmbiLED_HD.ModifierKeys.Control | AmbiLED_HD.ModifierKeys.Alt, (Keys)HOTKEY_PSEUDO_FULL_SCREEN);
 
+                RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                if (rk.GetValue("AmbiLED") != null) RunOnStartup.Checked = true;
 
                 // Notify icon set up
                 MyNotifyIcon.Visible = true;
@@ -249,6 +257,8 @@ namespace AmbiLED
 
 
                 RegisterPowerSettingNotification(this.Handle, ref GUID_CONSOLE_DISPLAY_STATE, DEVICE_NOTIFY_WINDOW_HANDLE); // MONITOR SLEEP DETECTION 
+
+
                 
                 
             }
@@ -334,6 +344,9 @@ namespace AmbiLED
             FRAME_LED_BOTTOM_RIGHT = ini.IniReadInt("MAIN", "FRAME_LED_BOTTOM_RIGHT");
             FRAME_LED_GAP = ini.IniReadInt("MAIN", "FRAME_LED_GAP");
 
+            HOTKEY_PSEUDO_FULL_SCREEN = ini.IniReadInt("MAIN", "HOTKEY_PSEUDO_FULL_SCREEN");
+            HOTKEY_SET_RATIO = ini.IniReadInt("MAIN", "HOTKEY_SET_RATIO");
+
 
             TOTAL_LED_COUNT = FRAME_LED_LEFT + FRAME_LED_TOP + FRAME_LED_RIGHT + FRAME_LED_BOTTOM_LEFT + FRAME_LED_BOTTOM_RIGHT;
 
@@ -352,7 +365,7 @@ namespace AmbiLED
             Power_Level =  ini.IniReadInt("MAIN", "Power_Level");
             SerialPortName = ini.IniReadValue("MAIN", "PortName");
 
-
+            DelayBar.Value = Refresh_Interval;
             
             if (SerialPortName == "COM0") // If com port didnt set
                 {
@@ -423,6 +436,7 @@ namespace AmbiLED
             int x, y;
             Point pos = new Point { X = 0, Y = 0 };
             stripPos.Clear();
+            Black_Stripe_Pos.Clear();
 
 
             int bottom_right_length = (int)((Screen_Width-(2*Left_Right_Space))* (((float)FRAME_LED_BOTTOM_RIGHT / (float)(FRAME_LED_BOTTOM_LEFT + FRAME_LED_GAP + FRAME_LED_BOTTOM_RIGHT))));
@@ -432,6 +446,7 @@ namespace AmbiLED
                 pos.X = x;
                 pos.Y = y;
                 stripPos.Add(pos);
+                Black_Stripe_Pos.Add(stripPos.Count-1); //black strip pixels
             }
 
             x = Left_Right_Space;//Left Bottom to Left Top
@@ -440,6 +455,7 @@ namespace AmbiLED
                 pos.X = x;
                 pos.Y = y;
                 stripPos.Add(pos);
+
             }
 
             y = Up_Down_Space; //Left Top to Right Top
@@ -448,6 +464,7 @@ namespace AmbiLED
                 pos.X = x;
                 pos.Y = y;
                 stripPos.Add(pos);
+                Black_Stripe_Pos.Add(stripPos.Count - 1);
             }
 
             x = sx; //Right Top to Right Bottom
@@ -465,6 +482,7 @@ namespace AmbiLED
                 pos.X = x;
                 pos.Y = y;
                 stripPos.Add(pos);
+                Black_Stripe_Pos.Add(stripPos.Count - 1);
             }
 
 
@@ -505,30 +523,64 @@ namespace AmbiLED
             LEDarray = ScreenShot.CaptureImage(bounds, stripPos_array);
 
 
+            // BLACK STRIPE ELIMINATOR 
+            if (Black_Stripe_Eliminator)
+            {
+
+                BSD_i++;
+                if (BSD_i >20) 
+                    {
+                    Black_Stripe_Detected = true;
+                    BSD_i = 0;
+                    }
+
+
+                for (int i = 0; i < Black_Stripe_Pos.Count; i++)
+                {
+                    if ((LEDarray[3 * Black_Stripe_Pos[i] + 0] + LEDarray[3 * Black_Stripe_Pos[i] + 1] + LEDarray[3 * Black_Stripe_Pos[i] + 2]) > Black_Stripe_Threshold)
+                    {
+                        Black_Stripe_Detected = false;
+                        BSD_i = 1;
+                    }
+                }
+
+                if (Black_Stripe_Detected)
+                {
+                    Console.Beep();
+                    Black_Stripe_Detected = false;
+                    BSD_width += 5; // increase the stripe +5 pixel
+                    Set_LED_Positions(8, BSD_width + 8, "2D");
+                    return;
+                }                  
+
+            }
+            // END of BLACK STRIPE ELIMINATOR 
+
+
             int r = 0;
             int g = 0;
             int b = 0;
             //int i = 0;
 
-            int led_oran =  (stripPos.Count() / TOTAL_LED_COUNT)+1;
+            float led_oran = (float)stripPos.Count() / TOTAL_LED_COUNT;// +1;
             int Tx_Buffer_ID = 0;
 
-            for (int i = 0; i < LEDarray.Length;i++ )
+            for (int i = 0; i < LEDarray.Length ;i+=3 )
             {
-                if (i % 3 == 0) r += LEDarray[i];
-                if (i % 3 == 1) g += LEDarray[i];
-                if (i % 3 == 2) b += LEDarray[i];
+                r += LEDarray[i+0];
+                g += LEDarray[i+1];
+                b += LEDarray[i+2];
 
-
-
-                if (i % (3 * led_oran) == (3*led_oran)-1)
+                
+                
+                if ((i/3) % led_oran >= led_oran-1)
                 {
 
 
 
-                    r = r / led_oran;
-                    g = g / led_oran;
-                    b = b / led_oran;
+                    r = (int)(r / led_oran);
+                    g = (int)(g / led_oran);
+                    b = (int)(b / led_oran);
 
                     //r = (int)(r * POWER_LEVEL * 0.9);
                     //g = (int)(g * POWER_LEVEL * 1.0);
@@ -555,15 +607,6 @@ namespace AmbiLED
 
             }
 
-            //s.UnlockRectangle();
-            //s.Dispose();
-            //gs.Close();
-            //gs.Dispose();
-            //surfaceSource.Dispose();
-            //device1.Dispose();
-            //direct3D.Dispose();
-            //s2.UnlockRectangle();
-            //s2.Dispose();
         }
             
         private void mode_select(int mode_number)
@@ -673,12 +716,11 @@ namespace AmbiLED
         ///    KEYBOARD SHORTCUT CTRL+ALT+F12
          void hook_KeyPressed(object sender, KeyPressedEventArgs e)
             {
-                // show the keys pressed in a label.
-                //label8.Text = e.Modifier.ToString() + " + " + e.Key.ToString() + "  Mouse:" + Cursor.Position.X;
-
-                Set_LED_Positions(Cursor.Position.X + 5, Cursor.Position.Y + 5); //Set the blank spaces
-
+                if ((int)e.Key == HOTKEY_SET_RATIO) Set_LED_Positions(Cursor.Position.X + 5, Cursor.Position.Y + 5); //Set the blank spaces// F12 Key
+                if ((int)e.Key == HOTKEY_PSEUDO_FULL_SCREEN) RemoveBorder((IntPtr)GetForegroundWindow()); //Set current window as full screen //  F11 Key,
             }
+
+
         
         ///     Gets the WindowHandle for the given Process
         private IntPtr FindWindowHandle(string processName)
@@ -769,6 +811,28 @@ namespace AmbiLED
             ini.IniWriteValue("MAIN", "Power_Level", (lvl * 100).ToString());
         }
         /// END POWER SET
+        /// 
+
+        public bool ControlAero(bool enable)
+        {
+            try
+            {
+                if (enable)
+                    Win32DwmEnableComposition(DWM_EC_ENABLECOMPOSITION);
+                if (!enable)
+                    Win32DwmEnableComposition(DWM_EC_DISABLECOMPOSITION);
+
+                return true;
+            }
+            catch { return false; }
+        }
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//----------------------END OF FUNCTIONS  --------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 
 
 
@@ -776,8 +840,7 @@ namespace AmbiLED
         {
             this.Hide();
             e.Cancel = true; // this cancels the close event.
-            //UnregisterHotKey(this.Handle, 0);       // Unregister hotkey with id 0 before closing the form. You might want to call this more than once with different id values if you are planning to register more than one hotkey.
-
+           
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -799,6 +862,7 @@ namespace AmbiLED
 
             if (d == DialogResult.Yes)
             {
+                hook.Dispose();// Unregister hotkey 
                 Environment.Exit(1);
                 serialPort1.Close();
                 Application.Exit();
@@ -815,7 +879,7 @@ namespace AmbiLED
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-            UpdateProcessList();
+            
             
         }
 
@@ -1092,7 +1156,7 @@ namespace AmbiLED
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-
+            Black_Stripe_Eliminator = true;
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
@@ -1179,6 +1243,30 @@ namespace AmbiLED
         private void tabPage4_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void DelayBar_ValueChanged(object sender, EventArgs e)
+        {
+            Refresh_Interval = DelayBar.Value;
+            IniFile ini = new IniFile(Application.StartupPath + @"\\config.ini");
+            ini.IniWriteValue("MAIN", "Refresh_Interval", Refresh_Interval.ToString());
+            DelayLabel.Text = "Delay: " + Refresh_Interval.ToString() + "ms";
+
+        }
+
+        private void DelayBar_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pseudoFullScreenToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
+        {
+            UpdateProcessList();
+        }
+
+        private void Aero_CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            ControlAero(Aero_CheckBox.Checked);
         }
 
 
