@@ -57,10 +57,13 @@
             this.sleepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.audioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pseudoFullScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripMenuItem();
             this.showSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.DelayLabel = new System.Windows.Forms.Label();
+            this.DelayBar = new System.Windows.Forms.TrackBar();
             this.button2 = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.ComPortCombo = new System.Windows.Forms.ComboBox();
@@ -97,6 +100,7 @@
             this.BottomRight_Textbox = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.Aero_CheckBox = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.processList = new System.Windows.Forms.ListBox();
@@ -112,9 +116,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.StaticColorTimer = new System.Windows.Forms.Timer(this.components);
+            this.textBox5 = new System.Windows.Forms.TextBox();
             this.MyContextMenuStrip.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DelayBar)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel8.SuspendLayout();
@@ -345,9 +351,18 @@
             // 
             // pseudoFullScreenToolStripMenuItem
             // 
+            this.pseudoFullScreenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem9});
             this.pseudoFullScreenToolStripMenuItem.Name = "pseudoFullScreenToolStripMenuItem";
             this.pseudoFullScreenToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.pseudoFullScreenToolStripMenuItem.Text = "Pseudo Full Screen";
+            this.pseudoFullScreenToolStripMenuItem.DropDownOpened += new System.EventHandler(this.pseudoFullScreenToolStripMenuItem_DropDownOpened);
+            // 
+            // toolStripMenuItem9
+            // 
+            this.toolStripMenuItem9.Name = "toolStripMenuItem9";
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(185, 22);
+            this.toolStripMenuItem9.Text = "-- Active Windows --";
             // 
             // showSettingsToolStripMenuItem
             // 
@@ -377,6 +392,9 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.textBox5);
+            this.tabPage4.Controls.Add(this.DelayLabel);
+            this.tabPage4.Controls.Add(this.DelayBar);
             this.tabPage4.Controls.Add(this.button2);
             this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Controls.Add(this.ComPortCombo);
@@ -392,6 +410,28 @@
             this.tabPage4.Text = "Main Settings";
             this.tabPage4.UseVisualStyleBackColor = true;
             this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
+            // 
+            // DelayLabel
+            // 
+            this.DelayLabel.AutoSize = true;
+            this.DelayLabel.Location = new System.Drawing.Point(76, 190);
+            this.DelayLabel.Name = "DelayLabel";
+            this.DelayLabel.Size = new System.Drawing.Size(56, 13);
+            this.DelayLabel.TabIndex = 13;
+            this.DelayLabel.Text = "Delay:1ms";
+            // 
+            // DelayBar
+            // 
+            this.DelayBar.Location = new System.Drawing.Point(11, 206);
+            this.DelayBar.Maximum = 100;
+            this.DelayBar.Minimum = 1;
+            this.DelayBar.Name = "DelayBar";
+            this.DelayBar.Size = new System.Drawing.Size(191, 45);
+            this.DelayBar.TabIndex = 12;
+            this.DelayBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.DelayBar.Value = 1;
+            this.DelayBar.Scroll += new System.EventHandler(this.DelayBar_Scroll);
+            this.DelayBar.ValueChanged += new System.EventHandler(this.DelayBar_ValueChanged);
             // 
             // button2
             // 
@@ -512,6 +552,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(3, 8);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(27, 13);
@@ -546,7 +587,7 @@
             // 
             // panel7
             // 
-            this.panel7.BackColor = System.Drawing.Color.Silver;
+            this.panel7.BackColor = System.Drawing.Color.LimeGreen;
             this.panel7.Controls.Add(this.label5);
             this.panel7.Controls.Add(this.UpDown_Right);
             this.panel7.Controls.Add(this.Right_Textbox);
@@ -558,6 +599,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(2, 8);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(61, 13);
@@ -592,7 +634,7 @@
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.Color.Silver;
+            this.panel6.BackColor = System.Drawing.Color.LimeGreen;
             this.panel6.Controls.Add(this.label4);
             this.panel6.Controls.Add(this.UpDown_Left);
             this.panel6.Controls.Add(this.Left_Textbox);
@@ -604,6 +646,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(2, 8);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 13);
@@ -638,7 +681,7 @@
             // 
             // panel5
             // 
-            this.panel5.BackColor = System.Drawing.Color.Silver;
+            this.panel5.BackColor = System.Drawing.Color.LimeGreen;
             this.panel5.Controls.Add(this.label3);
             this.panel5.Controls.Add(this.UpDown_Top);
             this.panel5.Controls.Add(this.Top_Textbox);
@@ -650,6 +693,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(2, 8);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(55, 13);
@@ -684,7 +728,7 @@
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.Color.Silver;
+            this.panel4.BackColor = System.Drawing.Color.LimeGreen;
             this.panel4.Controls.Add(this.label2);
             this.panel4.Controls.Add(this.UpDown_BottomLeft);
             this.panel4.Controls.Add(this.BottomLeft_Textbox);
@@ -696,7 +740,8 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(2, 8);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(6, 8);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(90, 13);
             this.label2.TabIndex = 3;
@@ -730,7 +775,7 @@
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.Silver;
+            this.panel3.BackColor = System.Drawing.Color.LimeGreen;
             this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.UpDown_BottomRight);
             this.panel3.Controls.Add(this.BottomRight_Textbox);
@@ -742,7 +787,8 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(2, 8);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(6, 8);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(97, 13);
             this.label1.TabIndex = 3;
@@ -774,10 +820,18 @@
             this.BottomRight_Textbox.Size = new System.Drawing.Size(31, 20);
             this.BottomRight_Textbox.TabIndex = 1;
             // 
-
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::AmbiLED_HD.Properties.Resources.d630_032;
+            this.pictureBox1.Location = new System.Drawing.Point(75, 37);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(552, 389);
+            this.pictureBox1.TabIndex = 9;
+            this.pictureBox1.TabStop = false;
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.Aero_CheckBox);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.label7);
             this.tabPage2.Controls.Add(this.processList);
@@ -792,6 +846,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Advanced";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // Aero_CheckBox
+            // 
+            this.Aero_CheckBox.AutoSize = true;
+            this.Aero_CheckBox.Location = new System.Drawing.Point(214, 38);
+            this.Aero_CheckBox.Name = "Aero_CheckBox";
+            this.Aero_CheckBox.Size = new System.Drawing.Size(85, 17);
+            this.Aero_CheckBox.TabIndex = 22;
+            this.Aero_CheckBox.Text = "Aero_Check";
+            this.Aero_CheckBox.UseVisualStyleBackColor = true;
             // 
             // label8
             // 
@@ -938,6 +1002,17 @@
             this.StaticColorTimer.Interval = 500;
             this.StaticColorTimer.Tick += new System.EventHandler(this.StaticColorTimer_Tick);
             // 
+            // textBox5
+            // 
+            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox5.Location = new System.Drawing.Point(254, 10);
+            this.textBox5.Multiline = true;
+            this.textBox5.Name = "textBox5";
+            this.textBox5.ReadOnly = true;
+            this.textBox5.Size = new System.Drawing.Size(446, 286);
+            this.textBox5.TabIndex = 14;
+            this.textBox5.Text = resources.GetString("textBox5.Text");
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -950,7 +1025,7 @@
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AmbiLED Driver v1.0";
+            this.Text = "AmbiLED Driver v1.8 BETA";
             this.Deactivate += new System.EventHandler(this.Form1_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -959,9 +1034,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DelayBar)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UpDown_Gap)).EndInit();
@@ -1078,6 +1153,11 @@
         private System.Windows.Forms.ToolStripMenuItem dVideoSideBySideToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dualMonitorSideBySideToolStripMenuItem;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label DelayLabel;
+        private System.Windows.Forms.TrackBar DelayBar;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem9;
+        private System.Windows.Forms.CheckBox Aero_CheckBox;
+        private System.Windows.Forms.TextBox textBox5;
 
     }
 }

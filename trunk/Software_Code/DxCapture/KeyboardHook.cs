@@ -98,8 +98,10 @@ namespace AmbiLED_HD
             _currentId = _currentId + 1;
 
             // register the hot key.
-            if (!RegisterHotKey(_window.Handle, _currentId, (uint)modifier, (uint)key))
-                throw new InvalidOperationException("Couldn’t register the hot key.");
+            RegisterHotKey(_window.Handle, _currentId, (uint)modifier, (uint)key);
+            //if (!RegisterHotKey(_window.Handle, _currentId, (uint)modifier, (uint)key))
+            //    throw new InvalidOperationException("Couldn’t register the hot key. Please open config.ini and set another key.");
+
         }
 
         /// <summary>
