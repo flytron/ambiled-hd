@@ -863,6 +863,7 @@ namespace AmbiLED
             if (d == DialogResult.Yes)
             {
                 hook.Dispose();// Unregister hotkey 
+                MyNotifyIcon.Visible = false;
                 Environment.Exit(1);
                 serialPort1.Close();
                 Application.Exit();
