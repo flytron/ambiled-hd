@@ -62,6 +62,7 @@
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.textBox5 = new System.Windows.Forms.TextBox();
             this.DelayLabel = new System.Windows.Forms.Label();
             this.DelayBar = new System.Windows.Forms.TrackBar();
             this.button2 = new System.Windows.Forms.Button();
@@ -100,12 +101,13 @@
             this.BottomRight_Textbox = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.update_btn = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.Aero_CheckBox = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.processList = new System.Windows.Forms.ListBox();
             this.MonitorSleepButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.ScreenPanel = new System.Windows.Forms.Panel();
@@ -116,7 +118,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.StaticColorTimer = new System.Windows.Forms.Timer(this.components);
-            this.textBox5 = new System.Windows.Forms.TextBox();
             this.MyContextMenuStrip.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -410,6 +411,18 @@
             this.tabPage4.Text = "Main Settings";
             this.tabPage4.UseVisualStyleBackColor = true;
             this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
+            // 
+            // textBox5
+            // 
+            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox5.Location = new System.Drawing.Point(254, 10);
+            this.textBox5.Multiline = true;
+            this.textBox5.Name = "textBox5";
+            this.textBox5.ReadOnly = true;
+            this.textBox5.Size = new System.Drawing.Size(446, 286);
+            this.textBox5.TabIndex = 14;
+            this.textBox5.Text = resources.GetString("textBox5.Text");
+            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
             // DelayLabel
             // 
@@ -831,12 +844,13 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.update_btn);
+            this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Controls.Add(this.Aero_CheckBox);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.label7);
             this.tabPage2.Controls.Add(this.processList);
             this.tabPage2.Controls.Add(this.MonitorSleepButton);
-            this.tabPage2.Controls.Add(this.textBox1);
             this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.panel1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -846,6 +860,26 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Advanced";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // update_btn
+            // 
+            this.update_btn.Location = new System.Drawing.Point(214, 162);
+            this.update_btn.Name = "update_btn";
+            this.update_btn.Size = new System.Drawing.Size(137, 23);
+            this.update_btn.TabIndex = 24;
+            this.update_btn.Text = "Check for Update";
+            this.update_btn.UseVisualStyleBackColor = true;
+            this.update_btn.Click += new System.EventHandler(this.update_btn_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(214, 90);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(137, 23);
+            this.button3.TabIndex = 23;
+            this.button3.Text = "Change Strip Direction";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Aero_CheckBox
             // 
@@ -894,14 +928,6 @@
             this.MonitorSleepButton.Text = "Monitor Sleep";
             this.MonitorSleepButton.UseVisualStyleBackColor = true;
             this.MonitorSleepButton.Click += new System.EventHandler(this.MonitorSleepButton_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(305, 17);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(103, 168);
-            this.textBox1.TabIndex = 17;
             // 
             // button1
             // 
@@ -1002,17 +1028,6 @@
             this.StaticColorTimer.Interval = 500;
             this.StaticColorTimer.Tick += new System.EventHandler(this.StaticColorTimer_Tick);
             // 
-            // textBox5
-            // 
-            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox5.Location = new System.Drawing.Point(254, 10);
-            this.textBox5.Multiline = true;
-            this.textBox5.Name = "textBox5";
-            this.textBox5.ReadOnly = true;
-            this.textBox5.Size = new System.Drawing.Size(446, 286);
-            this.textBox5.TabIndex = 14;
-            this.textBox5.Text = resources.GetString("textBox5.Text");
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1025,7 +1040,7 @@
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AmbiLED Driver v1.8 BETA";
+            this.Text = "AmbiLED Driver";
             this.Deactivate += new System.EventHandler(this.Form1_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -1116,7 +1131,6 @@
         private System.Windows.Forms.TextBox BottomRight_Textbox;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel ScreenPanel;
@@ -1158,6 +1172,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem9;
         private System.Windows.Forms.CheckBox Aero_CheckBox;
         private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button update_btn;
 
     }
 }
