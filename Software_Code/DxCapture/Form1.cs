@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,16 +13,17 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Collections.ObjectModel;
 using System.IO.Ports;
+using System.Reflection;
 using Ini;
 using Microsoft.Win32;
 using AmbiLED.WindowsApi;
 using AmbiLED_HD;
-
+using SharpUpdate;
 
 
 namespace AmbiLED
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form, ISharpUpdatable
     {
 
         //----------MONITOR SLEEP DETECTION------------------- 
@@ -60,6 +62,7 @@ namespace AmbiLED
         ///     list of currently running processes
         private List<string> processCache = new List<string>();
 
+        private SharpUpdater updater;
 
         public Color ColorSetValue { get; set; }
 
@@ -164,6 +167,10 @@ namespace AmbiLED
         int Monitor_Width = 300; 
         int Monitor_Height = 200;
 
+        string IniFilePath;
+
+        Boolean inverted_strip = false;
+
         //-------------------------------------------------------
 
         /*
@@ -202,10 +209,12 @@ namespace AmbiLED
           try
             {
             InitializeComponent();
-
+            IniFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AmbiLED\\config.ini");
             Read_Ini_File();
             Set_LED_Positions();
 
+            this.Text = "AmbiLED Driver v" + this.ApplicationAssembly.GetName().Version.ToString() + " BETA";
+            updater = new SharpUpdater(this);
 
             
             }
@@ -214,6 +223,38 @@ namespace AmbiLED
                 //MessageBox.Show("Whoops! We have a problem!\n\n" + ex.ToString());
             }
         }
+
+        #region SharpUpdate
+        public string ApplicationName
+        {
+            get { return "AmbiLED"; }
+        }
+
+        public string ApplicationID
+        {
+            get { return "AmbiLED"; }
+        }
+
+        public Assembly ApplicationAssembly
+        {
+            get { return Assembly.GetExecutingAssembly(); }
+        }
+
+        public Icon ApplicationIcon
+        {
+            get { return this.Icon; }
+        }
+
+        public Uri UpdateXmlLocation
+        {
+            get { return new Uri("http://www.ambiledhd.com/update.xml"); }
+        }
+
+        public Form Context
+        {
+            get { return this; }
+        }
+        #endregion
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -333,8 +374,7 @@ namespace AmbiLED
 
         void Read_Ini_File()
         {
-            //INIFile Ini = new INIFile(Application.StartupPath + @"\\config.ini");
-            IniFile ini = new IniFile(Application.StartupPath + @"\\config.ini");
+            IniFile ini = new IniFile(IniFilePath);
 
 
             FRAME_LED_LEFT = ini.IniReadInt("MAIN", "FRAME_LED_LEFT");
@@ -364,6 +404,8 @@ namespace AmbiLED
             Refresh_Interval = ini.IniReadInt("MAIN", "Refresh_Interval");
             Power_Level =  ini.IniReadInt("MAIN", "Power_Level");
             SerialPortName = ini.IniReadValue("MAIN", "PortName");
+
+            if (ini.IniReadValue("MAIN", "STRIP_DIRECTION") != "COUNTERCLOCKWISE") inverted_strip = true; //Special for Clockwise strip installations.
 
             DelayBar.Value = Refresh_Interval;
             
@@ -407,7 +449,8 @@ namespace AmbiLED
 
         }
 
-        void Set_LED_Positions(int Left_Right_Space = 8, int Up_Down_Space = 8, string Monitor_Mode = "2D" )
+
+        void Set_LED_Positions(int Left_Right_Space = 8, int Up_Down_Space = 8, string Monitor_Mode = "2D")
         {
             int o = 2;// ((Screen.PrimaryScreen.Bounds.Width + Screen.PrimaryScreen.Bounds.Height) * 2) / (led_adet * 10);
             //int m = 8;
@@ -638,7 +681,7 @@ namespace AmbiLED
                     CaptureTimer.Enabled = false;
                     StaticColorTimer.Enabled = true;
                     colorSelectToolStripMenuItem.Checked = true;
-                    /*
+                    /* ---- OLD Code ----
                     ColorDialog colorDialog1 = new ColorDialog();
                     colorDialog1.AllowFullOpen = true;
                     colorDialog1.FullOpen = true;
@@ -807,7 +850,7 @@ namespace AmbiLED
         {
             POWER_LEVEL = lvl;
             // connect to INI file
-            IniFile ini = new IniFile(Application.StartupPath + @"\\config.ini");
+            IniFile ini = new IniFile(IniFilePath);
             ini.IniWriteValue("MAIN", "Power_Level", (lvl * 100).ToString());
         }
         /// END POWER SET
@@ -826,7 +869,6 @@ namespace AmbiLED
             }
             catch { return false; }
         }
-
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -1055,6 +1097,21 @@ namespace AmbiLED
             sw.Reset();
             sw.Start();
 
+            if (inverted_strip)
+            {
+                //INVERT DATA for CLOCKWISE STRIP DIRECTION
+                byte[] Buf_COM_Tx_Buffer = new byte[2000];
+                Array.Copy(COM_Tx_Buffer, Buf_COM_Tx_Buffer, 2000);
+                for (int di = 0;di<TOTAL_LED_COUNT;di++)
+                {
+                    int byte_num = (di * 3);
+                    COM_Tx_Buffer[byte_num + 1] = Buf_COM_Tx_Buffer[(TOTAL_LED_COUNT * 3) - (byte_num + 2)];
+                    COM_Tx_Buffer[byte_num + 2] = Buf_COM_Tx_Buffer[(TOTAL_LED_COUNT * 3) - (byte_num + 1)];
+                    COM_Tx_Buffer[byte_num + 3] = Buf_COM_Tx_Buffer[(TOTAL_LED_COUNT * 3) - (byte_num + 0)];
+                }
+                //===================================
+            }
+
             COM_Tx_Buffer[TOTAL_LED_COUNT * 3] = (byte)255; //SHOW 
             // Send data over serial if the device enabled
             if ((SerialPortName != "COM0") && (Monitor_Sleeping==false)) 
@@ -1117,7 +1174,7 @@ namespace AmbiLED
 
         private void buttonSave_Click_1(object sender, EventArgs e)
         {
-            IniFile ini = new IniFile(Application.StartupPath + @"\\config.ini");
+            IniFile ini = new IniFile(IniFilePath);
             //Write to INI
             ini.IniWriteValue("MAIN", "FRAME_LED_LEFT", Left_Textbox.Text.ToString());
             ini.IniWriteValue("MAIN", "FRAME_LED_RIGHT", Right_Textbox.Text.ToString());
@@ -1134,7 +1191,7 @@ namespace AmbiLED
             FRAME_LED_GAP = ini.IniReadInt("MAIN", "FRAME_LED_GAP");
 
             TOTAL_LED_COUNT = FRAME_LED_LEFT + FRAME_LED_TOP + FRAME_LED_RIGHT + FRAME_LED_BOTTOM_LEFT + FRAME_LED_BOTTOM_RIGHT;
-            // Refrtesh default full screen settigns.
+            // Refresh default full screen settigns.
             fullScreenToolStripMenuItem.PerformClick();
             // Clear the Strip buffer
             COM_Tx_Buffer[512 * 3] = (byte)252; //Clear LED buffer and read the color sensor.(the sensor read is not important now, just for clear)
@@ -1211,7 +1268,7 @@ namespace AmbiLED
         private void ComPortCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
             // connect to INI file
-            IniFile ini = new IniFile(Application.StartupPath + @"\\config.ini");
+            IniFile ini = new IniFile(IniFilePath);
             //Check port name for change
             if (ComPortCombo.Text != ini.IniReadValue("MAIN", "PortName"))
             {
@@ -1238,7 +1295,7 @@ namespace AmbiLED
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Process.Start("notepad.exe", Application.StartupPath + @"\\config.ini");
+            Process.Start("notepad.exe", IniFilePath);
         }
 
         private void tabPage4_Click(object sender, EventArgs e)
@@ -1249,7 +1306,7 @@ namespace AmbiLED
         private void DelayBar_ValueChanged(object sender, EventArgs e)
         {
             Refresh_Interval = DelayBar.Value;
-            IniFile ini = new IniFile(Application.StartupPath + @"\\config.ini");
+            IniFile ini = new IniFile(IniFilePath);
             ini.IniWriteValue("MAIN", "Refresh_Interval", Refresh_Interval.ToString());
             DelayLabel.Text = "Delay: " + Refresh_Interval.ToString() + "ms";
 
@@ -1268,6 +1325,39 @@ namespace AmbiLED
         private void Aero_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
             ControlAero(Aero_CheckBox.Checked);
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Direction_Checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            
+
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            IniFile ini = new IniFile(IniFilePath);
+
+            if (ini.IniReadValue("MAIN", "STRIP_DIRECTION") != "COUNTERCLOCKWISE")
+            {
+                ini.IniWriteValue("MAIN", "STRIP_DIRECTION", "COUNTERCLOCKWISE");
+                inverted_strip = false;
+            }
+            else
+            {
+                ini.IniWriteValue("MAIN", "STRIP_DIRECTION", "CLOCKWISE");
+                inverted_strip = true;
+            }
+        }
+
+        private void update_btn_Click(object sender, EventArgs e)
+        {
+            updater.DoUpdate();
         }
 
 

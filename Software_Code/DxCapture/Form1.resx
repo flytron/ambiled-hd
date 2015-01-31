@@ -112,24 +112,24 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="CaptureTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="CaptureTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="serialPort1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="serialPort1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>556, 19</value>
   </metadata>
-  <metadata name="MyNotifyIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="MyNotifyIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>145, 15</value>
   </metadata>
-  <metadata name="MyContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="MyContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>264, 14</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="MyNotifyIcon.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAAAAAAAEAGABfewAAZgAAAEBAAAABABgAKDIAAMV7AAAwMAAAAQAYAKgcAADtrQAAICAAAAEA
@@ -1107,6 +1107,24 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 </value>
   </data>
+  <data name="textBox5.Text" xml:space="preserve">
+    <value>[HOTKEYS]
+In this version, We have  2 registered hotkeys.
+If your computer is already using CTRL+ALT+P and CTRL+ALT+R keys, 
+You will receive "Couldn’t register the hot key" error message on startup. 
+To customize the hotkey values, open Config.ini file and change the key values. 
+
+[CTRL+ALT+R] : SET THE ASPECT RATIO
+If you are watching a movie with black borders, you can use this hotkey to set the aspect ratio.
+Move your mouse cursor LEFT-TOP of the video content and press CTRL+ALT+R keys to set the aspect ratio to mouse position. 
+
+[CTRL+ALT+P] : PSEUDO FULL SCREEN FOR GAMES
+Same with our current Pseudo Full Screen menu. But it's detecting the focused windows automatically and streching it to full screen. 
+This is simple solution for gamers. Just run your game in windowed mode and press CTRL+ALT+P to making it full screen. 
+This method works with most of windowed games. But, some games cannot detect the size changes and cannot work properly.
+So, you should test it with your game. If it’s not working well, you can still use our aspect ratio option to set the content.
+IMPORTANT: You can close the streched windows with ALT+F4 keys </value>
+  </data>
   <data name="textBox4.Text" xml:space="preserve">
     <value>  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -1946,27 +1964,9 @@ PROJECT PAGE
 -------------------------------------------
 https://code.google.com/p/ambiled-hd/</value>
   </data>
-  <metadata name="StaticColorTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="StaticColorTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>424, 18</value>
   </metadata>
-  <data name="textBox5.Text" xml:space="preserve">
-    <value>[HOTKEYS]
-In this version, We have  2 registered hotkeys.
-If your computer is already using CTRL+ALT+P and CTRL+ALT+R keys, 
-You will receive "Couldn’t register the hot key" error message on startup. 
-To customize the hotkey values, open Config.ini file and change the key values. 
-
-[CTRL+ALT+R] : SET THE ASPECT RATIO
-If you are watching a movie with black borders, you can use this hotkey to set the aspect ratio.
-Move your mouse cursor LEFT-TOP of the video content and press CTRL+ALT+R keys to set the aspect ratio to mouse position. 
-
-[CTRL+ALT+P] : PSEUDO FULL SCREEN FOR GAMES
-Same with our current Pseudo Full Screen menu. But it's detecting the focused windows automatically and streching it to full screen. 
-This is simple solution for gamers. Just run your game in windowed mode and press CTRL+ALT+P to making it full screen. 
-This method works with most of windowed games. But, some games cannot detect the size changes and cannot work properly.
-So, you should test it with your game. If it’s not working well, you can still use our aspect ratio option to set the content.
-IMPORTANT: You can close the streched windows with ALT+F4 keys </value>
-  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAAAAAAAEAGABfewAAZgAAAEBAAAABABgAKDIAAMV7AAAwMAAAAQAYAKgcAADtrQAAICAAAAEA
