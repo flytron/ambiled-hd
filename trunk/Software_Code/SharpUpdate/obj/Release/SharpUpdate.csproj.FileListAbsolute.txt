@@ -1,0 +1,10 @@
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\SharpUpdate\bin\Release\SharpUpdate.dll
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\SharpUpdate\bin\Release\SharpUpdate.pdb
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\SharpUpdate\obj\Release\SharpUpdate.csprojResolveAssemblyReference.cache
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\SharpUpdate\obj\Release\SharpUpdate.Properties.Resources.resources
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\SharpUpdate\obj\Release\SharpUpdate.SharpUpdateAcceptForm.resources
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\SharpUpdate\obj\Release\SharpUpdate.SharpUpdateDownloadForm.resources
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\SharpUpdate\obj\Release\SharpUpdate.SharpUpdateInfoForm.resources
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\SharpUpdate\obj\Release\SharpUpdate.csproj.GenerateResource.Cache
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\SharpUpdate\obj\Release\SharpUpdate.dll
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\SharpUpdate\obj\Release\SharpUpdate.pdb
