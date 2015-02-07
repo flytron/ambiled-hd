@@ -34,3 +34,20 @@ E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\Release\AmbiLED
 E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\Release\AmbiLED_HD.application
 E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\Release\AmbiLED_HD.exe
 E:\FLYTRON_Projects\Ambilight\Google_Code\Software\DxCapture\obj\Release\AmbiLED_HD.pdb
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\bin\Release\AmbiLED_HD.exe.config
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\bin\Release\AmbiLED_HD.exe.manifest
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\bin\Release\AmbiLED_HD.application
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\bin\Release\AmbiLED_HD.exe
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\bin\Release\AmbiLED_HD.pdb
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\bin\Release\SharpUpdate.dll
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\bin\Release\SharpUpdate.pdb
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Release\AmbiLED HD.csprojResolveAssemblyReference.cache
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Release\AmbiLED_HD.ColorForm.resources
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Release\AmbiLED.Form1.resources
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Release\AmbiLED_HD.Properties.Resources.resources
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Release\AmbiLED HD.csproj.GenerateResource.Cache
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Release\AmbiLED_HD.TrustInfo.xml
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Release\AmbiLED_HD.exe.manifest
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Release\AmbiLED_HD.application
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Release\AmbiLED_HD.exe
+E:\FLYTRON_Projects\Ambilight\Google_Code\Software_Code\DxCapture\obj\Release\AmbiLED_HD.pdb
