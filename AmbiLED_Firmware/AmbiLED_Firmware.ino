@@ -21,11 +21,9 @@ byte R_previous = 0;
 byte G_previous = 0;
 byte B_previous = 0;
 byte isSleep = 0;
-#if defined(DoublePixels)
-byte big_screen = 1;
-#else
-byte big_screen = 0;
-#endif
+
+byte Pixel_Res = LED_resolution; 
+
 int color_sensor_counter=0;
 
 unsigned long lastByteTime, t;
@@ -80,13 +78,23 @@ void loop() {
                             else if (bi%3 == 2)   
                                {
                                  B_pixel = cmd;
-                                 if (big_screen==0)
+                                 if (Pixel_Res==1)
                                      strip.setPixelColor((bi/3)-1,R_pixel,G_pixel,B_pixel); //buffer single pixel
-                                   else
+                                 else if (Pixel_Res==2)
                                    {
                                      strip.setPixelColor((bi/3)-1,R_pixel,G_pixel,B_pixel); //buffer double pixel for big screens
                                      bi +=3;
                                      strip.setPixelColor((bi/3)-1,R_pixel,G_pixel,B_pixel); 
+                                   }
+                                 else //Pixel_Res==4
+                                   {
+                                    strip.setPixelColor((bi/3)-1,R_pixel,G_pixel,B_pixel); //buffer quad pixel for bigger screens
+                                    bi +=3;
+                                    strip.setPixelColor((bi/3)-1,R_pixel,G_pixel,B_pixel);  
+                                    bi +=3;
+                                    strip.setPixelColor((bi/3)-1,R_pixel,G_pixel,B_pixel);
+                                    bi +=3;
+                                    strip.setPixelColor((bi/3)-1,R_pixel,G_pixel,B_pixel);
                                    }
                                    
                                }
@@ -161,17 +169,13 @@ void commands(byte cmd)
           strip.show();
           isSleep=0;
           bi=0; 
-          #if defined(DoublePixels)
-             big_screen = 1;
-          #else
-             big_screen = 0;
-          #endif
+          Pixel_Res = LED_resolution;
           break;
         case 254:// SET LEDs 2x for big screens
           strip.show();
           isSleep=0;
           bi=0; 
-          big_screen = 1;
+          Pixel_Res = 2;
           break;  
 
         case 252:// Read Sensors when strip is off
