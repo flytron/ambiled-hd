@@ -15,7 +15,7 @@
 
 // Double or Quad pixels for more than 255 pixel strips
 // 1-2-4
-#define LED_resolution 2
+#define LED_resolution 1
 
 // Fast LED color setting for shorter than 255 pixel strips
 #define ShortStrip
