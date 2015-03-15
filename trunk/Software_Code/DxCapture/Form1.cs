@@ -10,7 +10,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Collections.ObjectModel;
 using System.IO.Ports;
 using System.Reflection;
@@ -167,6 +166,8 @@ namespace AmbiLED
         int Monitor_Width = 300; 
         int Monitor_Height = 200;
 
+        int AmbiLEd_Mode = 1;
+
         string IniFilePath;
 
         Boolean inverted_strip = false;
@@ -202,6 +203,8 @@ namespace AmbiLED
         Collection<int> Black_Stripe_Pos = new Collection<int>();
         Collection<System.Drawing.Color> stripColor = new Collection<System.Drawing.Color>();
 
+        
+
         const int Bpp = 4;
 
         public Form1()
@@ -216,6 +219,7 @@ namespace AmbiLED
             this.Text = "AmbiLED Driver v" + this.ApplicationAssembly.GetName().Version.ToString() + " BETA";
             updater = new SharpUpdater(this);
 
+            SystemEvents.PowerModeChanged += OnPowerModeChanged;
             
             }
          catch (Exception ex)
@@ -564,6 +568,7 @@ namespace AmbiLED
 
             byte[] LEDarray = new Byte[stripPos.Count*3];
             LEDarray = ScreenShot.CaptureImage(bounds, stripPos_array);
+            if ((LEDarray[0] == 255) && (LEDarray[0] == 254) && (LEDarray[0] == 253) && (LEDarray[0] == 252)) return;
 
 
             // BLACK STRIPE ELIMINATOR 
@@ -658,7 +663,7 @@ namespace AmbiLED
             sleepToolStripMenuItem.Checked = false;
             audioToolStripMenuItem.Checked = false;
             colorSelectToolStripMenuItem.Checked = false;
-
+            AmbiLEd_Mode = mode_number;
             switch (mode_number)
             {
                 case 1:
@@ -751,7 +756,7 @@ namespace AmbiLED
                     }
 
                     // getting MainWindowHandle is 'heavy' -> pause a bit to spread the load
-                    Thread.Sleep(10);
+                    System.Threading.Thread.Sleep(10);
                 }
             }
         }
@@ -868,6 +873,24 @@ namespace AmbiLED
                 return true;
             }
             catch { return false; }
+        }
+
+
+        private void OnPowerModeChanged(object sender, PowerModeChangedEventArgs e)
+        {
+            switch (e.Mode)
+            {
+                case PowerModes.Resume:
+                    System.Threading.Thread.Sleep(5000);
+                    mode_select(AmbiLEd_Mode); //Continue to mode
+                    break;
+                case PowerModes.Suspend:
+                    int mode_cache = AmbiLEd_Mode;
+                    mode_select(2); //Sleep
+                    AmbiLEd_Mode = mode_cache;
+                    break;
+            }
+            
         }
 
 //------------------------------------------------------------------
